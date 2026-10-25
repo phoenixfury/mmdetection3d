@@ -89,9 +89,13 @@ class CBGSDataset:
 
         sample_indices = []
 
-        frac = 1.0 / len(classes)
-        ratios = [frac / v for v in class_distribution.values()]
-        for cls_inds, ratio in zip(list(class_sample_idxs.values()), ratios):
+        populated = [(class_sample_idxs[k], class_distribution[k])
+                     for k in class_sample_idxs if class_sample_idxs[k]]
+        if not populated:
+            return list(range(len(dataset)))
+        frac = 1.0 / len(populated)
+        for cls_inds, distribution in populated:
+            ratio = frac / distribution
             sample_indices += np.random.choice(cls_inds,
                                                int(len(cls_inds) *
                                                    ratio)).tolist()
