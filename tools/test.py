@@ -3,6 +3,16 @@ import argparse
 import os
 import os.path as osp
 
+import numpy as np
+# Keep inference compatible with the older scikit-learn package in the shared
+# OpenMMLab environment, which still imports NumPy's removed scalar aliases.
+if "float" not in np.__dict__:
+    np.float = float  # type: ignore[attr-defined]
+if "int" not in np.__dict__:
+    np.int = int  # type: ignore[attr-defined]
+if "bool" not in np.__dict__:
+    np.bool = bool  # type: ignore[attr-defined]
+
 from mmengine.config import Config, ConfigDict, DictAction
 from mmengine.registry import RUNNERS
 from mmengine.runner import Runner
