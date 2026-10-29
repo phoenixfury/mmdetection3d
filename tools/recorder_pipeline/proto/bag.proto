@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package bag;
+
+import "google/protobuf/timestamp.proto";
+
+message Sample {
+  google.protobuf.Timestamp timestamp = 1;
+  google.protobuf.Timestamp read_timestamp = 3;
+  bytes data = 2;
+}
+
+message TopicData {
+  google.protobuf.Timestamp timestamp = 1;
+  repeated Sample samples = 2;
+}

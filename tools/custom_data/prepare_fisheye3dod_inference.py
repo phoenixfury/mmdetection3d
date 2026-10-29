@@ -215,7 +215,13 @@ def main() -> None:
                 'cam2lidar': np.linalg.inv(lidar2cam).astype(np.float32),
             }
 
-        lidar_relative = Path('..') / row['lidar_path']
+        # Recorder-pipeline dataset manifests call the exported cloud
+        # ``lidar_pcd``; legacy synchronization manifests call the source
+        # binary ``lidar_path``.  Both are relative to ``converted`` here.
+        lidar_path = row.get('lidar_pcd') or row.get('lidar_path')
+        if not lidar_path:
+            raise KeyError('manifest requires lidar_pcd or lidar_path')
+        lidar_relative = Path('..') / lidar_path
         data_list.append({
             'sample_idx': sample_index,
             'token': timestamp,

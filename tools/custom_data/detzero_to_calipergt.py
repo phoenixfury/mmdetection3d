@@ -16,13 +16,16 @@ from pathlib import Path
 import numpy as np
 
 
-CLASSES = ('Car', 'Van', 'Truck', 'Bus', 'Pedestrian', 'Cyclist')
+CLASSES = ('Car', 'Van', 'Truck', 'Bus', 'ConstructionVehicle',
+           'Pedestrian', 'Cyclist')
 CLASS_ALIASES = {
     'vehicle': 'Car',
     'car': 'Car',
     'van': 'Van',
     'truck': 'Truck',
     'bus': 'Bus',
+    'construction_vehicle': 'ConstructionVehicle',
+    'constructionvehicle': 'ConstructionVehicle',
     'pedestrian': 'Pedestrian',
     'cyclist': 'Cyclist',
     'bicycle': 'Cyclist',

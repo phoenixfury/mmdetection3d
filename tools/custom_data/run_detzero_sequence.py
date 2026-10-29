@@ -34,7 +34,10 @@ TRACKING_GAP_RESET_SECONDS = 4.0
 LABEL_TO_ORIGINAL_CLASS = {
     0: 'Car',
     1: 'Truck',
-    2: 'Truck',  # construction_vehicle
+    # Keep the native NuScenes fine class.  Collapsing it to Truck loses the
+    # distinction used by the CaliperGT taxonomy and cannot be recovered by
+    # track-level class voting later in the pipeline.
+    2: 'ConstructionVehicle',
     3: 'Bus',
     4: 'Truck',  # trailer
     6: 'Cyclist',  # motorcycle
@@ -46,6 +49,7 @@ ORIGINAL_TO_DETZERO_CLASS = {
     'Van': 'Vehicle',
     'Truck': 'Vehicle',
     'Bus': 'Vehicle',
+    'ConstructionVehicle': 'Vehicle',
     'Pedestrian': 'Pedestrian',
     'Cyclist': 'Cyclist',
 }
@@ -55,6 +59,7 @@ COLORS = {
     'Van': (255, 121, 41),
     'Truck': (0, 145, 255),
     'Bus': (68, 23, 255),
+    'ConstructionVehicle': (160, 80, 255),
     'Pedestrian': (40, 190, 240),
     'Cyclist': (230, 120, 30),
 }
@@ -73,6 +78,10 @@ def parse_args() -> argparse.Namespace:
         'head-dcn-circlenms_8xb4-cyclic-20e_nus-3d.py'))
     parser.add_argument('--checkpoint', type=Path, default=(
         ROOT / 'checkpoints/centerpoint_nus_voxel0075_dcn.pth'))
+    parser.add_argument(
+        '--calibration', type=Path,
+        help='calibration.json containing T_BASELINK_CLIDAR; defaults to '
+             'SEQUENCE/calibration.json or SEQUENCE/../calibration.json')
     parser.add_argument('--detzero-checkpoints', type=Path,
                         default=ROOT / 'checkpoints_det3zero')
     parser.add_argument(
@@ -97,6 +106,10 @@ def parse_args() -> argparse.Namespace:
         '--tracking-profile', choices=('default', 'camera-2hz'),
         default='camera-2hz', help='camera-2hz enables wider sparse-frame motion '
         'gates and 2 Hz Kalman/noise tuning')
+    parser.add_argument(
+        '--tracking-filter', choices=('ab3dmot', 'detzero-kalman'),
+        default='ab3dmot',
+        help='tracking state estimator (default: planar AB3DMOT)')
     parser.add_argument('--limit', type=int)
     parser.add_argument('--render-range', type=float, default=60.0)
     parser.add_argument('--render-size', type=int, default=1000)
@@ -286,6 +299,37 @@ def install_detzero_paths() -> None:
         np.bool = np.bool_
     if 'int' not in np.__dict__:
         np.int = int
+    if 'float' not in np.__dict__:
+        np.float = float
+
+
+def world_lidar_poses(sequence: Path, calibration: Path | None) -> np.ndarray:
+    """Compose exported T_world_base poses with T_base_lidar.
+
+    Point clouds and CenterPoint boxes are expressed in CLIDAR, whereas the
+    recorder exporter deliberately stores the localization pose in BASELINK.
+    Treating that pose as T_world_lidar produces a lever-arm error whenever
+    the ego vehicle rotates.
+    """
+    base_poses = np.load(sequence / 'odometry_poses.npy')
+    if calibration is None:
+        candidates = (sequence / 'calibration.json',
+                      sequence.parent / 'calibration.json')
+        calibration = next((path for path in candidates if path.exists()), None)
+    if calibration is None or not calibration.exists():
+        raise FileNotFoundError(
+            'calibration.json is required to transform CLIDAR boxes with '
+            'BASELINK odometry; pass --calibration')
+    document = json.loads(calibration.read_text())
+    lidar = document.get('extrinsics', {}).get('CLIDAR')
+    if not lidar or lidar.get('from') != 'CLIDAR' or lidar.get('to') != 'BASELINK':
+        raise ValueError(
+            f'{calibration}: expected extrinsics.CLIDAR to describe '
+            'T_BASELINK_CLIDAR')
+    base_from_lidar = np.asarray(lidar['matrix'], dtype=np.float64)
+    if base_from_lidar.shape != (4, 4):
+        raise ValueError(f'{calibration}: CLIDAR matrix must be 4x4')
+    return base_poses @ base_from_lidar
 
 
 def read_manifest(sequence: Path, limit: int | None) -> list[dict]:
@@ -325,6 +369,9 @@ def atomic_pickle(value, path: Path) -> None:
 
 def detect(sequence: Path, rows: list[dict], poses: np.ndarray,
            output: Path, args: argparse.Namespace) -> list[dict]:
+    # MMDetection imports an older scikit-learn release that still references
+    # NumPy's removed scalar aliases.
+    install_detzero_paths()
     from mmengine.config import Config
     from mmdet3d.apis import inference_detector, init_model
 
@@ -344,7 +391,7 @@ def detect(sequence: Path, rows: list[dict], poses: np.ndarray,
     if result_path.exists():
         cached = pickle.loads(result_path.read_bytes())
         if (cached.get('checkpoint') == str(args.checkpoint.resolve()) and
-                cached.get('label_schema_version') == 3 and
+                cached.get('label_schema_version') == 4 and
                 cached.get('score_thresholds') == thresholds):
             completed = cached['frames']
     start = len(completed)
@@ -399,7 +446,7 @@ def detect(sequence: Path, rows: list[dict], poses: np.ndarray,
         atomic_pickle({
             'checkpoint': str(args.checkpoint.resolve()),
             'config': str(args.config.resolve()),
-            'label_schema_version': 3,
+            'label_schema_version': 4,
             'score_thresholds': thresholds,
             'frames': completed,
         }, result_path)
@@ -459,6 +506,8 @@ def track(frames: list[dict], frame_times: np.ndarray, output: Path,
     with working_directory(tools):
         cfg_from_yaml_file(
             'cfgs/tk_model_cfgs/waymo_detzero_track.yaml', config)
+    config.MODEL.TRACKING.FILTER.NAME = (
+        'AB3DMOT' if args.tracking_filter == 'ab3dmot' else 'KalmanFilter')
     if args.fast_tracking:
         config.MODEL.TRACKING.TRACK_MERGE.ENABLE = False
         config.MODEL.TRACKING.REVERSE_TRACKING.ENABLE = False
@@ -485,6 +534,7 @@ def track(frames: list[dict], frame_times: np.ndarray, output: Path,
             if processor.NAME == 'velocity_optimize':
                 processor.DELTA_T = 0.5
         print('Tracking profile: camera-2hz (0.5 s, HybridBEV gates)')
+    print(f'Tracking filter: {config.MODEL.TRACKING.FILTER.NAME}')
     if args.reverse_max_misses is not None:
         if args.reverse_max_misses < 1:
             raise ValueError('--reverse-max-misses must be at least 1')
@@ -566,6 +616,12 @@ def track(frames: list[dict], frame_times: np.ndarray, output: Path,
     stabilize_tracks(tracks, frame_times=frame_times,
                      detection_frames=frames, delta_t=0.5)
     atomic_pickle(tracks, output / 'tracks.pkl')
+    (output / 'tracking_run_config.json').write_text(json.dumps({
+        'tracking_filter': config.MODEL.TRACKING.FILTER.NAME,
+        'tracking_profile': args.tracking_profile,
+        'vertical_prediction_enabled': False,
+        'height_prediction_enabled': False,
+    }, indent=2) + '\n')
     return tracks
 
 
@@ -1413,7 +1469,7 @@ def main() -> None:
         for row in rows
     ], dtype=np.float64)
     frame_times = (frame_times - frame_times[0]) * 1e-9
-    poses = np.load(sequence / 'odometry_poses.npy')
+    poses = world_lidar_poses(sequence, args.calibration)
     if max(int(row['odometry_index']) for row in rows) >= len(poses):
         raise ValueError('odometry_poses.npy is not aligned with manifest.csv')
 

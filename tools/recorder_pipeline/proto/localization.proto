@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package adas.localization;
+
+message Position {
+  double x = 1;
+  double y = 2;
+  double z = 3;
+}
+message PositionCovariance {
+  double x = 1;
+  double y = 2;
+  double z = 3;
+}
+message Velocity {
+  double x = 1;
+  double y = 2;
+  double z = 3;
+}
+message VelocityCovariance {
+  double x = 1;
+  double y = 2;
+  double z = 3;
+}
+message EulerAngles {
+  double roll = 1;
+  double pitch = 2;
+  double yaw = 3;
+}
+message OrientationCovariance {
+  double roll = 1;
+  double pitch = 2;
+  double yaw = 3;
+}
+message Accuracy {
+  PositionCovariance position_cov = 1;
+  VelocityCovariance velocity_cov = 2;
+  OrientationCovariance orientation_cov = 3;
+  double yaw_rate_cov = 4;
+}
+enum Status {
+  INITIALIZING = 0;
+  TRACKING = 1;
+  DEGRADED = 2;
+  ERROR = 3;
+}
+message VehicleAcceleration {
+  double lat = 1;
+  double lon = 2;
+}
+message EgoPoseFused {
+  int64 timestamp = 1;
+  Position position = 2;
+  Velocity velocity = 3;
+  EulerAngles orientation = 4;
+  double yaw_rate = 5;
+  Accuracy accuracy = 6;
+  Status status = 7;
+  VehicleAcceleration latlon_acc = 8;
+}
