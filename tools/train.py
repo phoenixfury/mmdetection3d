@@ -4,6 +4,16 @@ import logging
 import os
 import os.path as osp
 
+import numpy as np
+# The Fisheye3DOD environment can contain an older scikit-learn release that
+# still imports NumPy's removed scalar aliases while MMDetection is imported.
+if "float" not in np.__dict__:
+    np.float = float  # type: ignore[attr-defined]
+if "int" not in np.__dict__:
+    np.int = int  # type: ignore[attr-defined]
+if "bool" not in np.__dict__:
+    np.bool = bool  # type: ignore[attr-defined]
+
 from mmengine.config import Config, DictAction
 from mmengine.logging import print_log
 from mmengine.registry import RUNNERS
