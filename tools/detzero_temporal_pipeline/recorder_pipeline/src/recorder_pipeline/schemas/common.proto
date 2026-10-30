@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package adas.common;
+
+message Point2D { double x = 1; double y = 2; }
+message Point2Df { float x = 1; float y = 2; }
+message Pose2D { Point2D position = 1; double orientation = 2; }
+enum AvailabilityStatus { kNotAvailable = 0; kAvailable = 1; kAvailableReduced = 2; }
+message EgoPose { AvailabilityStatus status = 1; int64 timestamp = 2; Pose2D pose = 3; }
+message Polygon { repeated Point2D points = 1; }
+message BoundingBox { float x_ul = 1; float y_ul = 2; float x_br = 3; float y_br = 4; float conf = 5; }
+message Keypoint { float x = 1; float y = 2; float conf = 3; }
+message Detection { BoundingBox bbox = 1; repeated Keypoint keypoints = 2; int64 label = 3; }
+message KeypointBoundingBoxPredictions { repeated Detection detections = 1; }

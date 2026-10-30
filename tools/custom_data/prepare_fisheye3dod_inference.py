@@ -9,6 +9,7 @@ lens geometry and writes an annotation-free MMDetection3D info file.
 from __future__ import annotations
 
 import argparse
+import copy
 import csv
 import json
 import os
@@ -205,6 +206,9 @@ def main() -> None:
                 image_size = (int(intrinsic['width']),
                               int(intrinsic['height']))
             else:
+                # ROSA's Fisheye3DOD adapter consumes the actual OCamCamera
+                # polynomial, not a placeholder projection matrix.
+                cam2img = copy.deepcopy(ocam)
                 image_size = (ocam.width, ocam.height)
             camera_info[model_name] = {
                 'cam_path': relative.as_posix(),
@@ -229,7 +233,9 @@ def main() -> None:
                 'scene_name': args.converted.name,
                 'vehicle_name': 'ego',
                 'weather': 'unknown',
-                'frame_id': timestamp,
+                'frame_id': str(sample_index),
+                'acquisition_timestamp_ns': int(
+                    row.get('lidar_sensor_timestamp_ns') or timestamp),
                 'prev_id': rows[sample_index - 1]['timestamp_ns']
                 if sample_index else '',
                 'next_id': rows[sample_index + 1]['timestamp_ns']

@@ -294,7 +294,7 @@ def ground_truth(sample: dict) -> list:
 def render_model(sample: dict, points: np.ndarray, detections: list,
                  ocam: OcamCamera, data_root: Path,
                  args: argparse.Namespace, title: str,
-                 metrics: dict[str, float]) -> np.ndarray:
+                 metrics: dict[str, float] | None) -> np.ndarray:
     canvas = np.full((900, 1600, 3), 12, dtype=np.uint8)
     gt = ground_truth(sample)
     bev = draw_bev(points, detections, gt, args)
@@ -321,9 +321,10 @@ def render_model(sample: dict, points: np.ndarray, detections: list,
     frame_id = sample.get("metainfo", {}).get("frame_id", "")
     cv2.putText(canvas, title, (30, 40), cv2.FONT_HERSHEY_SIMPLEX,
                 .9, (255, 255, 255), 2, cv2.LINE_AA)
+    score_label = (f"mAP {metrics['mAP']:.4f}  NDS {metrics['NDS']:.4f}  "
+                   if metrics is not None else 'Unlabeled synchronized bag  ')
     cv2.putText(canvas,
-                f"mAP {metrics['mAP']:.4f}  NDS {metrics['NDS']:.4f}  "
-                f"score >= {args.score_threshold:.2f}",
+                f"{score_label}score >= {args.score_threshold:.2f}",
                 (30, 76), cv2.FONT_HERSHEY_SIMPLEX, .58,
                 (200, 230, 255), 1, cv2.LINE_AA)
     cv2.putText(canvas,
@@ -331,7 +332,9 @@ def render_model(sample: dict, points: np.ndarray, detections: list,
                 f"pred {sum(score >= args.score_threshold for _, _, score in detections)}",
                 (30, 105), cv2.FONT_HERSHEY_SIMPLEX, .47,
                 (190, 190, 190), 1, cv2.LINE_AA)
-    cv2.putText(canvas, "solid/color: prediction   dashed/white: validation GT",
+    legend = ("solid/color: prediction   dashed/white: validation GT"
+              if not args.no_ground_truth else "solid/color: model prediction")
+    cv2.putText(canvas, legend,
                 (760, 890), cv2.FONT_HERSHEY_SIMPLEX, .42,
                 (190, 190, 190), 1, cv2.LINE_AA)
     return canvas

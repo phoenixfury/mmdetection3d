@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "recorder-pipeline"
+version = "0.4.7"
+description = "Modular timestamp-safe ADAS recorder conversion pipeline"
+requires-python = ">=3.8"
+dependencies = ["numpy>=1.24", "Pillow>=9", "tqdm>=4", "protobuf>=4"]
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[project.scripts]
+recorder-pipeline = "recorder_pipeline.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.setuptools.package-data]
+recorder_pipeline = ["schemas/*.proto"]

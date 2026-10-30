@@ -1,0 +1,11 @@
+numba==0.43.1
+
+llvmlite==0.32.1 			
+	
+
+filterpy==1.4.5
+scikit-learn==0.19.2
+matplotlib
+pillow==6.2.2
+opencv-python
+glob2==0.6

@@ -1,0 +1,11 @@
+{
+  "bundle_version": "temporal_pipeline_v2",
+  "includes_complete_detzero_sources": true,
+  "includes_complete_recorder_sources": true,
+  "includes_model_weights": false,
+  "includes_BAG_data": false,
+  "new_fix_1": "per-acquisition-timestamp forward and reverse Kalman F/Q and postprocess speed",
+  "new_fix_2": "camera-time ego SLERP, tracked object velocity and point ego-warp during projection",
+  "legacy_annotations_preserved": true,
+  "file_count": 710
+}

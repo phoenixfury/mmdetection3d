@@ -1,5 +1,10 @@
 # Custom recorder conversion and calibration checks
 
+> The commands below document the legacy per-stage conversion tools. For the
+> current sensor-clock BAG → DetZero → postprocessing → combined dataset →
+> Fisheye3DOD/ROSA workflow, use
+> [README_START_HERE.md](../detzero_temporal_pipeline/README_START_HERE.md).
+
 These tools convert the four Fisheye3DOD surround cameras (`ARC_F`, `ARC_R`,
 `ARC_SL`, `ARC_SR`) and the Ouster/CLIDAR stream in this recorder format.
 

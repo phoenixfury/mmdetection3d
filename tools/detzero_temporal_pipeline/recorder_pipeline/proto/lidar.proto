@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+message PointCloud {
+  uint64 timestamp = 1;
+  int32 rows = 2;
+  bytes data = 3; // raw float32 buffer or compressed (ouster-zeromq/PCL octree)
+}
+message LidarOutput {
+  repeated LidarBox boxes = 1;
+}
+message LidarBox {
+  optional uint32 _class = 1;
+  float score = 2;
+  float x = 3;
+  float y = 4;
+  optional float z = 5;
+  float x_size = 6;
+  float y_size = 7;
+  optional float z_size = 8;
+  float yaw = 9;
+  optional uint64 track_id = 10;
+}

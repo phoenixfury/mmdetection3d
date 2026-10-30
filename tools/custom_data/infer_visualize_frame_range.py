@@ -84,7 +84,16 @@ def corners_3d(box: np.ndarray) -> np.ndarray:
 
 
 def load_points(path: Path) -> np.ndarray:
-    raw = np.fromfile(path, dtype=np.float32)
+    if path.suffix.lower() == '.pcd':
+        payload = path.read_bytes()
+        marker = b'DATA binary\n'
+        offset = payload.find(marker)
+        if offset < 0:
+            raise ValueError(f'{path}: expected binary PCD')
+        raw = np.frombuffer(payload, dtype=np.float32,
+                            offset=offset + len(marker))
+    else:
+        raw = np.fromfile(path, dtype=np.float32)
     if len(raw) % 4:
         raise ValueError(f'{path}: expected float32 XYZI')
     points = raw.reshape(-1, 4)
@@ -102,6 +111,10 @@ def run_inference(args: argparse.Namespace, subset_path: Path,
         str(args.checkpoint.resolve()), '--work-dir', str(run_dir.resolve()),
         '--cfg-options',
         f'test_dataloader.dataset.ann_file={subset_path.resolve()}',
+        f'test_dataloader.dataset.data_root={args.dataset.resolve()}',
+        'test_dataloader.dataset.load_eval_anns=False',
+        'test_evaluator._delete_=True',
+        'test_evaluator.type=DumpResults',
         f'test_evaluator.out_file_path={raw_results.resolve()}',
         'test_dataloader.num_workers=2',
         'test_dataloader.persistent_workers=False',

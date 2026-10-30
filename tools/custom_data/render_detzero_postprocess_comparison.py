@@ -16,12 +16,20 @@ import argparse
 import csv
 import json
 import math
+import sys
 from collections import Counter
 from pathlib import Path
 
 import cv2
 import numpy as np
 from tqdm import tqdm
+
+TEMPORAL_SCRIPTS = (Path(__file__).resolve().parents[1] /
+                    'detzero_temporal_pipeline/integration_scripts')
+sys.path.insert(0, str(TEMPORAL_SCRIPTS))
+from camera_motion import CameraMotion
+from temporal_annotations import load_ego_poses
+from improve_detzero_annotations import tracker_prediction_support
 
 
 CAMERAS = (
@@ -57,7 +65,7 @@ def arguments() -> argparse.Namespace:
     parser.add_argument('--baseline', type=Path,
                         help='default: SEQUENCE/detzero_output/results.json')
     parser.add_argument('--postprocessed', type=Path,
-                        help='default: detzero_output/camera_validated_results.json')
+                        help='default: detzero_output/improved_results.json')
     parser.add_argument('--calibration', type=Path,
                         help='default: SEQUENCE/../calibration.json')
     parser.add_argument('--output-dir', type=Path,
@@ -283,6 +291,8 @@ def render_bev(points: np.ndarray, objects: dict[str, dict],
 
 def camera_panel(sequence: Path, row: dict, camera: tuple,
                  post: dict[str, dict], models: dict, transforms: dict,
+                 frame_index: int, motion: CameraMotion,
+                 velocities: dict,
                  size=(640, 540)) -> np.ndarray:
     name, column, title = camera
     image_path = sequence / row[column]
@@ -293,7 +303,12 @@ def camera_panel(sequence: Path, row: dict, camera: tuple,
     for item in post.values():
         color = (ADDED_COLOR if item.get('source') == 'camera_track_hold'
                  else POSTPROCESS_COLOR)
-        draw_camera_box(panel, item, transforms[name], models[name],
+        velocity = velocities.get((int(item['track_id']), frame_index))
+        projected = dict(item)
+        projected['box'] = motion.box(
+            np.asarray(item['box'], dtype=float), frame_index, name,
+            velocity).tolist()
+        draw_camera_box(panel, projected, transforms[name], models[name],
                         (scale, offset_x, offset_y), color, 2,
                         label=True)
     delta_ms = float(row.get(column.replace('_path', '_delta_ns'), 0)) / 1e6
@@ -331,7 +346,7 @@ def main() -> None:
     baseline_path = (args.baseline or sequence / 'detzero_output' /
                      'results.json').resolve()
     post_path = (args.postprocessed or sequence / 'detzero_output' /
-                 'camera_validated_results.json').resolve()
+                 'improved_results.json').resolve()
     calibration_path = (args.calibration or sequence.parent /
                         'calibration.json').resolve()
     rows = read_rows(sequence / 'manifest.csv')
@@ -339,6 +354,10 @@ def main() -> None:
     post = json.loads(post_path.read_text())
     validate(rows, baseline, post)
     models, transforms = calibration(calibration_path)
+    _, poses, _ = load_ego_poses(sequence, rows, calibration_path)
+    motion = CameraMotion(rows, poses)
+    _, velocities = tracker_prediction_support(
+        sequence / 'detzero_output/tracks.pkl')
     end = len(rows) if args.end is None else args.end
     if not 0 <= args.start < end <= len(rows):
         raise ValueError(
@@ -386,7 +405,8 @@ def main() -> None:
             positions = ((640, 0), (1280, 0), (640, 540), (1280, 540))
             for camera, (x, y) in zip(CAMERAS, positions):
                 dashboard[y:y + 540, x:x + 640] = camera_panel(
-                    sequence, row, camera, after, models, transforms)
+                    sequence, row, camera, after, models, transforms,
+                    index, motion, velocities)
             put_label(dashboard,
                       'postprocessed projections: green=LiDAR  cyan=camera-held',
                       (665, 1062), scale=.52)
@@ -400,6 +420,7 @@ def main() -> None:
         'postprocessed': str(post_path), 'calibration': str(calibration_path),
         'frame_interval': [args.start, end], 'frames': end - args.start,
         'fps': args.fps, 'bev_range_m': args.bev_range,
+        'camera_projection_time': 'camera packet timestamp: ego SLERP and tracker velocity',
         'counts': dict(totals),
         'videos': {'bev_comparison': str(bev_path),
                    'camera_dashboard': str(dashboard_path)},
