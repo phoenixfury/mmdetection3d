@@ -5,8 +5,23 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+import pytest
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from append_improved_detzero_rosa_dataset import assign_chronological_split
+from append_improved_detzero_rosa_dataset import assign_chronological_split, load_preparation
+
+
+def test_missing_ocam_export_explains_how_to_prepare_the_same_source(tmp_path):
+    sequence = tmp_path / "converted" / "dataset_temporal"
+    sequence.mkdir(parents=True)
+    with pytest.raises(FileNotFoundError) as caught:
+        load_preparation("16_09", sequence)
+    message = str(caught.value)
+    assert "prepare_fisheye3dod_inference.py" in message
+    assert str(sequence / "manifest.csv") in message
+    assert str(sequence.parent / "calibration.json") in message
+    assert "--sample-rate 0" in message
+    assert not (sequence / "fisheye3dod_inference_2hz").exists()
 
 
 def test_chronological_split_keeps_scenes_and_links_inside_partition():

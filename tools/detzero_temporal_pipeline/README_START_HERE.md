@@ -106,7 +106,29 @@ existing image assets. Anchor refitting rules are described below.
 **One-time migration:** the current combined dataset's 16/30 September entries
 were made with read-time camera synchronization. The importer intentionally
 rejects appending to them. First run steps 2–3 on both `dataset_temporal`
-sensor-clock sources, then replace both while adding the new BAG:
+sensor-clock sources. Their native images do not substitute for the OCam
+export: each source must have `fisheye3dod_inference_2hz/preparation.json`
+and `fisheye3dod_infos_test.pkl`.
+
+If the current `improved_results.json` files already exist, generate the
+missing OCam exports explicitly before running the migration command:
+
+```bash
+for TEMPORAL_DATASET in \
+  "$PWD/data/Custom/BAG_2026_09_16_09_58_56_converted/dataset_temporal" \
+  "$PWD/data/Custom/BAG_2026_09_30_10_10_54_converted/dataset_temporal"
+do
+  conda run --no-capture-output -n openmmlab python \
+    tools/custom_data/prepare_fisheye3dod_inference.py \
+    "$TEMPORAL_DATASET" "$TEMPORAL_DATASET/../calibration.json" \
+    --sync "$TEMPORAL_DATASET/manifest.csv" \
+    --output "$TEMPORAL_DATASET/fisheye3dod_inference_2hz" --sample-rate 0
+done
+```
+
+Wait for both exports to finish successfully. Do not copy the old `dataset/`
+OCam directories: their images were paired with a different synchronization.
+Keep `DATASET` set to the **17 September** dataset for this command:
 
 ```bash
 conda run --no-capture-output -n openmmlab python \

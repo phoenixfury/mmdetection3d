@@ -173,6 +173,15 @@ size alone cannot distinguish their body styles. The report records size
 relabels, overlapping profiles, and tracks skipped because their dimensions
 jump too much to support a reliable size-based relabel.
 
+`ConstructionVehicle` in `improved_results.json` is the native CenterPoint
+nuScenes fine class. It remains when a track's size is unstable or fits none
+of the configured road-vehicle profiles. This is not a seventh training
+class: the existing six-class combined exporter aliases it to `Van` for
+historical compatibility. That alias does not establish the object's actual
+body type; review these tracks before relying on their Van labels. Changing
+the road-vehicle profiles or the alias is a taxonomy decision, separate from
+camera/LiDAR synchronization.
+
 Camera confirmation also checks projected-box scale. A tiny 2D detection
 inside a much larger 3D projection cannot validate that vehicle or sustain a
 camera-held prediction when the projection area exceeds the detection area

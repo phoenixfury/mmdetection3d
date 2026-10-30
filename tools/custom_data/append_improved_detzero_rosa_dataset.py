@@ -16,6 +16,7 @@ import csv
 import json
 import os
 import re
+import shlex
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -86,15 +87,40 @@ def attach_temporal(sample: dict, metadata: dict) -> None:
     })
 
 
+def load_preparation(name: str, sequence: Path) -> dict:
+    """Report the exact preparation command instead of a missing-file traceback."""
+    template_root = sequence / "fisheye3dod_inference_2hz"
+    required = (template_root / "preparation.json",
+                template_root / "fisheye3dod_infos_test.pkl")
+    missing = [path for path in required if not path.is_file()]
+    if missing:
+        calibration = next((path for path in (sequence / "calibration.json",
+                            sequence.parent / "calibration.json") if path.is_file()),
+                           sequence.parent / "calibration.json")
+        command = shlex.join([
+            "conda", "run", "--no-capture-output", "-n", "openmmlab", "python",
+            str(ROOT / "tools/custom_data/prepare_fisheye3dod_inference.py"),
+            str(sequence), str(calibration), "--sync", str(sequence / "manifest.csv"),
+            "--output", str(template_root), "--sample-rate", "0",
+        ])
+        raise FileNotFoundError(
+            f"{name}: missing canonical 800x800 OCam export: "
+            f"{', '.join(str(path) for path in missing)}\n"
+            f"Generate it from this sensor-synchronized dataset before importing:\n{command}\n"
+            "Do not copy the old read-time-synchronized export into this directory.")
+    preparation = json.loads(required[0].read_text())
+    if preparation.get("image_mode") != "canonical-ocam":
+        raise ValueError(f"{name}: prepare the canonical 800x800 OCam images first")
+    return preparation
+
+
 def load_sequence(name: str, sequence: Path, output: Path, ocam: OcamCamera,
                   storage: str, dry_run: bool, next_id: int,
                   replacing: bool) -> tuple[list[dict], dict, int]:
     annotation = sequence / "detzero_output/improved_results.json"
     template_root = sequence / "fisheye3dod_inference_2hz"
     template_path = template_root / "fisheye3dod_infos_test.pkl"
-    preparation = json.loads((template_root / "preparation.json").read_text())
-    if preparation.get("image_mode") != "canonical-ocam":
-        raise ValueError(f"{name}: prepare the canonical 800x800 OCam images first")
+    load_preparation(name, sequence)
     frames = json.loads(annotation.read_text())
     templates = mmengine.load(template_path)["data_list"]
     by_token = {str(item["token"]): item for item in templates}
@@ -299,6 +325,9 @@ def main() -> None:
     for name, _, replacing in operations:
         if (name in old_sequences) != replacing:
             raise ValueError(f"{name}: use {'--replace-sequence' if name in old_sequences else '--add-sequence'}")
+    # Check every requested source before materializing any new images.
+    for name, source, _ in operations:
+        load_preparation(name, source)
     retained_names = set(old_sequences) - {name for name, _, replacing in replacements}
     samples = [sample for sample in samples
                if str(sample["metainfo"]["sequence_id"]) in retained_names]
@@ -417,4 +446,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except (FileNotFoundError, ValueError) as error:
+        raise SystemExit(str(error))
