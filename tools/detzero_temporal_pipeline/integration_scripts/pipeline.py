@@ -47,8 +47,8 @@ def arguments(argv: list[str] | None = None) -> argparse.Namespace:
     p.add_argument('--lidar-to-base', nargs=16, type=float, help='measured CLIDAR -> BASELINK matrix')
     p.add_argument('--combined-output', type=Path,
                    help='combined dataset root; omitted means no OCam preparation or dataset building')
-    p.add_argument('--dataset-mode', choices=('create', 'append', 'extend'), default='create',
-                   help='extend creates a new output preserving an existing base dataset split')
+    p.add_argument('--dataset-mode', choices=('create', 'append', 'replace', 'extend'), default='create',
+                   help='replace atomically refreshes an existing named sequence; extend creates a new output preserving a base split')
     p.add_argument('--base-dataset', type=Path, help='existing combined dataset root for --dataset-mode extend')
     p.add_argument('--sample-rate', type=float, default=2.)
     p.add_argument('--tolerance-ms', type=float, default=20.)
@@ -143,8 +143,9 @@ def commands(args: argparse.Namespace) -> tuple[list[tuple[str, list[str], Path]
                       'head-dcn-circlenms_8xb4-cyclic-20e_nus-3d.py'))
     if args.dataset_mode in ('create', 'extend') and combined is not None and combined.exists():
         raise FileExistsError(f'{combined}: already exists; choose --dataset-mode append or new output')
-    if args.dataset_mode == 'append' and combined is not None and not combined.is_dir():
-        raise FileNotFoundError(f'{combined}: append requires an existing combined dataset')
+    if args.dataset_mode in ('append', 'replace') and combined is not None and not combined.is_dir():
+        raise FileNotFoundError(
+            f'{combined}: {args.dataset_mode} requires an existing combined dataset')
     if args.dataset_mode == 'extend':
         if args.base_dataset is None:
             raise ValueError('--dataset-mode extend requires --base-dataset')
@@ -175,6 +176,7 @@ def commands(args: argparse.Namespace) -> tuple[list[tuple[str, list[str], Path]
     if 'extract' in selected:
         line = [sys.executable, '-m', 'recorder_pipeline.cli', 'all', str(bag),
                 '--output', str(converted), '--lidar-decoder', str(decoder),
+                '--calibration-fallback', str(calibration),
                 '--lidar-workers', str(args.lidar_workers),
                 '--camera-sync-clock', args.camera_sync_clock, '--sample-rate', str(args.sample_rate),
                 '--tolerance-ms', str(args.tolerance_ms)]
@@ -221,6 +223,11 @@ def commands(args: argparse.Namespace) -> tuple[list[tuple[str, list[str], Path]
             line = [sys.executable, str(SCRIPTS / 'append_improved_detzero_rosa_dataset.py'),
                     '--dataset', str(combined), '--ocam-calibration', str(ocam),
                     '--add-sequence', sequence_name, str(dataset), '--refit-anchors',
+                    '--source-calibration', str(calibration)]
+        elif args.dataset_mode == 'replace':
+            line = [sys.executable, str(SCRIPTS / 'append_improved_detzero_rosa_dataset.py'),
+                    '--dataset', str(combined), '--ocam-calibration', str(ocam),
+                    '--replace-sequence', sequence_name, str(dataset), '--refit-anchors',
                     '--source-calibration', str(calibration)]
         else:
             line = [sys.executable, str(SCRIPTS / 'build_chronological_combined_dataset.py'),

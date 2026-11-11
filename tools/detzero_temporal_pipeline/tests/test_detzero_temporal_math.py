@@ -51,6 +51,92 @@ def test_camera_hold_compensates_ego_height(scripts):
     assert nxt['global_center'][2] == pytest.approx(3.)
 
 
+def test_static_camera_hold_ignores_drifting_tracker_coast(scripts):
+    _, improve = scripts
+    state = {
+        'track_id': 4, 'name': 'Truck', 'score': .8,
+        'global_center': np.array([12., 3., 1.]),
+        'global_yaw': .2, 'velocity': np.zeros(2),
+        'dimensions': np.array([7., 2.5, 3.]),
+        'timestamp_ns': 1_000_000_000, 'last_lidar_frame': 0,
+        'hold_age': 0, 'is_static': True,
+    }
+    drifting_coast = np.array([18., 8., 1., 7., 2.5, 3., 1.2])
+    obj, nxt = improve.predicted_hold_object(
+        state, 2, 2_000_000_000, np.eye(4), drifting_coast,
+        np.array([6., 5.]), 60., 4., 45., 'tracker')
+    assert obj['box'][:3] == pytest.approx([12., 3., 1.])
+    assert obj['box'][6] == pytest.approx(.2)
+    assert nxt['global_center'] == pytest.approx([12., 3., 1.])
+    assert obj['hold_age_frames'] == 2
+
+
+def test_camera_bus_truck_subtype_requires_track_consensus(scripts):
+    from collections import Counter
+    _, improve = scripts
+    resolve = improve.camera_vehicle_subtype
+    assert resolve(Counter(Truck=4.2, Bus=.5),
+                   Counter(Truck=7, Bus=1)) == 'Truck'
+    assert resolve(Counter(Bus=3.0, Truck=.4),
+                   Counter(Bus=4, Truck=1)) == 'Bus'
+    assert resolve(Counter(Truck=.8), Counter(Truck=1)) is None
+    assert resolve(Counter(Truck=1.4, Bus=1.3),
+                   Counter(Truck=3, Bus=3)) is None
+
+
+def test_heavy_camera_labels_are_gated_by_lidar_dimensions(scripts):
+    _, improve = scripts
+    choose = improve.camera_subtype_for_dimensions
+    enforce = improve.enforce_vehicle_size_class
+    # A tall, non-heavy Car is a Van even when YOLO calls it Truck.
+    van = np.array([4.6, 1.9, 2.0])
+    assert choose('Truck', van, 'Car') == 'Van'
+    assert enforce('Car', van) == 'Van'
+    assert enforce('Truck', van) == 'Van'
+    # A normal-height hatchback cannot become Truck or Bus.
+    car = np.array([4.5, 1.9, 1.6])
+    assert choose('Truck', car, 'Car') == 'Car'
+    assert enforce('Truck', car) == 'Car'
+    # Detector height noise on a hatchback/crossover is not enough for Van.
+    tall_hatchback = np.array([4.3, 1.8, 1.78])
+    assert enforce('Car', tall_hatchback) == 'Car'
+    # Heavy and bus-sized tracks may use the explicit camera subtype.
+    truck = np.array([6.0, 2.2, 2.4])
+    bus = np.array([11.0, 2.7, 3.4])
+    assert choose('Truck', truck, 'Car') == 'Truck'
+    assert choose('Bus', truck, 'Car') == 'Truck'
+    assert choose('Bus', bus, 'Car') == 'Bus'
+
+
+def test_overlap_suppression_uses_evidence_confidence_then_age(scripts):
+    _, improve = scripts
+
+    def obj(track_id, *, source=None, score=.5, age=0, x=0.):
+        value = {'track_id': track_id, 'name': 'Car', 'score': score,
+                 'box': [x, 0., 0., 4.5, 1.85, 1.55, 0.]}
+        if source:
+            value.update(source=source, hold_age_frames=age)
+        return value
+
+    detected = obj(1, score=.2)
+    predicted = obj(2, source='camera_track_hold', score=.99, age=1)
+    retained, removed = improve.suppress_overlapping_boxes(
+        [predicted, detected], .1)
+    assert [item['track_id'] for item in retained] == [1]
+    assert removed['predicted_lost_to_lidar_detection'] == 1
+
+    newer = obj(3, source='camera_track_hold', score=.7, age=1)
+    older = obj(4, source='camera_track_hold', score=.7, age=5)
+    retained, removed = improve.suppress_overlapping_boxes([older, newer], .1)
+    assert [item['track_id'] for item in retained] == [3]
+    assert removed['older_lidar_detection'] == 1
+
+    high = obj(5, source='camera_track_hold', score=.8, age=5)
+    retained, removed = improve.suppress_overlapping_boxes([newer, high], .1)
+    assert [item['track_id'] for item in retained] == [5]
+    assert removed['lower_confidence'] == 1
+
+
 def test_lidar_to_global_respects_rotation(scripts):
     runner, _ = scripts
     pose = np.eye(4)

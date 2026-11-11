@@ -58,7 +58,9 @@ CANONICAL_DIMS = {
 # estimates on these bags; the nominal intervals are kept separate so an
 # especially clear Van can still be distinguished from a small Car.
 VEHICLE_SIZE_PROFILES = {
-    "Van": (([3.4, 1.7, 1.7], [4.0, 1.75, 1.9], [.25, .15, .15]),),
+    # Height is the decisive Van feature.  The old 1.70 m threshold captured
+    # tall hatchbacks and crossovers, so require a genuinely van-like body.
+    "Van": (([4.2, 1.75, 1.85], [7.0, 2.8, 3.4], [.2, .15, .15]),),
     "Car": (([3.9, 1.7, 1.4], [4.7, 2.2, 1.5], [.25, .15, .25]),),
     "Truck": (
         ([5.3, 1.85, 1.8], [5.8, 1.9, 2.0], [.3, .55, .65]),
@@ -74,6 +76,15 @@ MIN_VEHICLE_SIZE_LIDAR_FRAMES = 3
 # lorry for its entire lifetime.
 TRACK_REJECTION_DIMENSION_FACTOR = 1.15
 STATIC_GLOBAL_SPEED_MPS = 0.75
+MIN_CAMERA_SUBTYPE_FRAMES = 2
+MIN_CAMERA_SUBTYPE_WEIGHT = 0.5
+MIN_CAMERA_SUBTYPE_SHARE = 0.60
+# Hard lower bounds for promoting a stable LiDAR track to a heavy-vehicle
+# subtype. These are the nominal (not tolerance-expanded) profile minima.
+MIN_TRUCK_DIMS = np.array([5.3, 1.85, 1.8])
+MIN_BUS_DIMS = np.array([10.0, 2.55, 3.0])
+MIN_VAN_DIMS = np.array([4.2, 1.75, 1.85])
+DEFAULT_DUPLICATE_BEV_OVERLAP = 0.10
 DEFAULT_CAMERA_HOLD_MIN_OVERLAP = 0.55
 DEFAULT_CAMERA_HOLD_NO_LIDAR_MIN_OVERLAP = 0.95
 DEFAULT_CAMERA_HOLD_MAX_LIDAR_RESIDUAL_M = 2.0
@@ -209,6 +220,11 @@ def parse_args() -> argparse.Namespace:
         '--camera-time-max-pose-gap-s', type=float, default=4.,
         help='maximum bracket span permitted for interpolating ego poses')
     parser.add_argument(
+        '--duplicate-min-bev-overlap', type=float,
+        default=DEFAULT_DUPLICATE_BEV_OVERLAP,
+        help='minimum intersection / smaller-footprint area used to suppress '
+             'overlapping duplicate boxes')
+    parser.add_argument(
         "--smooth-headings", action="store_true",
         help="apply the legacy camera-pass heading smoother (off by default)")
     return parser.parse_args()
@@ -266,6 +282,61 @@ def ego_footprint_overlap(box: np.ndarray, front: float, rear: float,
     ], dtype=np.float32)
     area, _ = cv2.intersectConvexConvex(footprint_corners(box), ego)
     return float(max(area, 0.0))
+
+
+def footprint_overlap_ratio(first: np.ndarray, second: np.ndarray) -> float:
+    """Intersection divided by the smaller oriented BEV footprint area."""
+    area, _ = cv2.intersectConvexConvex(
+        footprint_corners(first), footprint_corners(second))
+    first_area = float(first[3] * first[4])
+    second_area = float(second[3] * second[4])
+    denominator = min(first_area, second_area)
+    return float(max(area, 0.0) / denominator) if denominator > 0 else 0.0
+
+
+def suppress_overlapping_boxes(objects: list[dict], threshold: float
+                               ) -> tuple[list[dict], Counter]:
+    """Remove duplicate footprints using the requested evidence priority.
+
+    Real LiDAR observations win over camera-track predictions.  Within the
+    same evidence tier, confidence wins, followed by the most recent LiDAR
+    observation (the shortest hold age).  Vehicle and vulnerable-road-user
+    boxes are suppressed only within their own family so a pedestrian beside
+    or partly occluded by a vehicle is not deleted.
+    """
+    def group(obj: dict) -> str:
+        return 'vehicle' if obj.get('name') in VEHICLES else 'vru'
+
+    def predicted(obj: dict) -> bool:
+        return obj.get('source') == 'camera_track_hold'
+
+    ordered = sorted(objects, key=lambda obj: (
+        predicted(obj), -float(obj.get('score', 0.0)),
+        int(obj.get('hold_age_frames', 0)), int(obj.get('track_id', 0))))
+    retained = []
+    removed = Counter()
+    for candidate in ordered:
+        collision = next((kept for kept in retained
+                          if group(kept) == group(candidate) and
+                          footprint_overlap_ratio(
+                              np.asarray(candidate['box'], float),
+                              np.asarray(kept['box'], float)) >= threshold),
+                         None)
+        if collision is None:
+            retained.append(candidate)
+            continue
+        if predicted(candidate) and not predicted(collision):
+            reason = 'predicted_lost_to_lidar_detection'
+        elif float(candidate.get('score', 0.0)) < float(
+                collision.get('score', 0.0)):
+            reason = 'lower_confidence'
+        else:
+            reason = 'older_lidar_detection'
+        removed[reason] += 1
+        removed[f"class:{candidate.get('name', 'unknown')}"] += 1
+    # Restore stable track ordering for deterministic JSON and rendering.
+    retained.sort(key=lambda obj: int(obj.get('track_id', 0)))
+    return retained, removed
 
 
 def load_rows(sequence: Path, limit: int | None) -> list[dict]:
@@ -615,17 +686,29 @@ def global_track_state(obj: dict, frame_index: int, timestamp_ns: int,
     center = (pose @ np.r_[box[:3], 1.0])[:3]
     pose_yaw = math.atan2(pose[1, 0], pose[0, 0])
     global_yaw = wrap(float(box[6]) + pose_yaw)
-    if velocity is None or not np.isfinite(velocity).all():
+    tracker_velocity = (None if velocity is None else
+                        np.asarray(velocity, dtype=float).copy())
+    if (tracker_velocity is not None and
+            not np.isfinite(tracker_velocity).all()):
+        tracker_velocity = None
+    measured_velocity = None
+    if previous is not None:
+        elapsed = (timestamp_ns - previous["last_lidar_timestamp_ns"]) * 1e-9
+        if elapsed > 1e-3:
+            measured_velocity = (
+                (center[:2] - previous["last_lidar_center"][:2]) / elapsed)
+    tracker_speed = (0.0 if tracker_velocity is None else
+                     float(np.linalg.norm(tracker_velocity)))
+    measured_speed = (0.0 if measured_velocity is None else
+                      float(np.linalg.norm(measured_velocity)))
+    is_static = (tracker_speed < STATIC_GLOBAL_SPEED_MPS and
+                 measured_speed < STATIC_GLOBAL_SPEED_MPS)
+    if is_static:
         velocity = np.zeros(2, dtype=float)
-        if previous is not None:
-            elapsed = (timestamp_ns - previous["last_lidar_timestamp_ns"]) * 1e-9
-            if elapsed > 1e-3:
-                velocity = ((center[:2] - previous["last_lidar_center"][:2]) /
-                            elapsed)
+    elif tracker_speed >= STATIC_GLOBAL_SPEED_MPS:
+        velocity = tracker_velocity
     else:
-        velocity = np.asarray(velocity, dtype=float).copy()
-    if np.linalg.norm(velocity) < STATIC_GLOBAL_SPEED_MPS:
-        velocity[:] = 0.0
+        velocity = measured_velocity
     return {
         "track_id": int(obj["track_id"]), "name": str(obj["name"]),
         "score": float(obj.get("score", 0.0)),
@@ -636,7 +719,9 @@ def global_track_state(obj: dict, frame_index: int, timestamp_ns: int,
         "local_z": float(box[2]),
         "last_frame": frame_index, "timestamp_ns": int(timestamp_ns),
         "last_lidar_center": center.copy(),
-        "last_lidar_timestamp_ns": int(timestamp_ns), "hold_age": 0,
+        "last_lidar_timestamp_ns": int(timestamp_ns),
+        "last_lidar_frame": int(frame_index), "hold_age": 0,
+        "is_static": bool(is_static),
     }
 
 
@@ -650,15 +735,17 @@ def predicted_hold_object(state: dict, frame_index: int, timestamp_ns: int,
     elapsed = (timestamp_ns - state["timestamp_ns"]) * 1e-9
     if elapsed <= 0 or elapsed > max_dt:
         return None
+    is_static = bool(state.get(
+        "is_static", np.linalg.norm(state["velocity"]) < STATIC_GLOBAL_SPEED_MPS))
     velocity = np.asarray(
-        tracker_velocity if tracker_velocity is not None else state["velocity"],
-        dtype=float).copy()
+        state["velocity"] if is_static or tracker_velocity is None
+        else tracker_velocity, dtype=float).copy()
     speed = float(np.linalg.norm(velocity))
     if speed < STATIC_GLOBAL_SPEED_MPS:
         velocity[:] = 0.0
     elif speed > max_speed:
         velocity *= max_speed / speed
-    if tracker_box is not None:
+    if tracker_box is not None and not is_static:
         global_center = np.asarray(tracker_box[:3], dtype=float).copy()
         global_yaw = wrap(float(tracker_box[6]))
         source = tracker_source
@@ -675,7 +762,8 @@ def predicted_hold_object(state: dict, frame_index: int, timestamp_ns: int,
         return None
     pose_yaw = math.atan2(pose[1, 0], pose[0, 0])
     local_yaw = wrap(global_yaw - pose_yaw)
-    hold_age = int(state["hold_age"]) + 1
+    hold_age = max(1, frame_index - int(
+        state.get("last_lidar_frame", state.get("last_frame", frame_index - 1))))
     obj = {
         "track_id": int(state["track_id"]), "name": str(state["name"]),
         "score": float(state["score"]),
@@ -687,6 +775,7 @@ def predicted_hold_object(state: dict, frame_index: int, timestamp_ns: int,
         **state, "global_center": global_center, "global_yaw": global_yaw,
         "velocity": velocity, "last_frame": frame_index,
         "timestamp_ns": int(timestamp_ns), "hold_age": hold_age,
+        "is_static": is_static,
     }
     return obj, next_state
 
@@ -815,7 +904,8 @@ def lidar_hold_support(
 
 def lidar_candidate(sequence: Path, row: dict, camera: str, detection: dict,
                     model: dict, transform: np.ndarray,
-                    max_distance: float, projection_cache: dict
+                    max_distance: float, projection_cache: dict,
+                    projection_transform: np.ndarray | None = None,
                     ) -> tuple[np.ndarray, int] | None:
     if camera not in projection_cache:
         points = read_binary_pcd(sequence / row["lidar_pcd"])
@@ -953,6 +1043,11 @@ def classify_vehicle_by_size(dimensions: np.ndarray, lidar_name: str) -> str:
     subtype wins that tie; no size-only rule can reliably separate them.
     """
     candidates = vehicle_size_candidates(dimensions)
+    # The broad Van envelope covers long vans, but once all three Truck
+    # minima are met the object must not be selected as Van by a lower profile
+    # penalty.  Camera/LiDAR evidence can still resolve Truck versus Bus.
+    if meets_minimum_dimensions(dimensions, MIN_TRUCK_DIMS):
+        candidates.pop("Van", None)
     if not candidates:
         return lidar_name
     if len(candidates) == 1:
@@ -975,6 +1070,64 @@ def classify_vehicle_by_size(dimensions: np.ndarray, lidar_name: str) -> str:
                                                              key=candidates.get)
 
 
+def camera_vehicle_subtype(votes: Counter, frames: Counter) -> str | None:
+    """Resolve an explicit YOLO Bus/Truck vote without trusting one-frame noise."""
+    explicit = {name: float(votes.get(name, 0.0))
+                for name in ("Bus", "Truck")}
+    winner = max(explicit, key=explicit.get)
+    total = sum(explicit.values())
+    if (int(frames.get(winner, 0)) < MIN_CAMERA_SUBTYPE_FRAMES or
+            explicit[winner] < MIN_CAMERA_SUBTYPE_WEIGHT or total <= 0 or
+            explicit[winner] / total < MIN_CAMERA_SUBTYPE_SHARE):
+        return None
+    return winner
+
+
+def meets_minimum_dimensions(dimensions: np.ndarray,
+                             minimum: np.ndarray) -> bool:
+    dims = np.asarray(dimensions, dtype=float)
+    return bool(dims.shape == (3,) and np.isfinite(dims).all() and
+                np.all(dims >= minimum))
+
+
+def van_sized(dimensions: np.ndarray) -> bool:
+    """A non-heavy vehicle taller than the regular-car envelope is a Van."""
+    dims = np.asarray(dimensions, dtype=float)
+    return bool(meets_minimum_dimensions(dims, MIN_VAN_DIMS) and
+                np.all(dims <= MAX_DIMS["Van"]) and
+                not meets_minimum_dimensions(dims, MIN_TRUCK_DIMS))
+
+
+def enforce_vehicle_size_class(name: str, dimensions: np.ndarray) -> str:
+    """Prevent stable hatchback-sized tracks from carrying heavy labels."""
+    if name == "Bus" and not meets_minimum_dimensions(dimensions, MIN_BUS_DIMS):
+        name = ("Truck" if meets_minimum_dimensions(
+                    dimensions, MIN_TRUCK_DIMS)
+                else "Van" if van_sized(dimensions) else "Car")
+    if name == "Truck" and not meets_minimum_dimensions(
+            dimensions, MIN_TRUCK_DIMS):
+        name = "Van" if van_sized(dimensions) else "Car"
+    if name == "Car" and van_sized(dimensions):
+        name = "Van"
+    return name
+
+
+def camera_subtype_for_dimensions(camera_name: str, dimensions: np.ndarray,
+                                   current_name: str) -> str:
+    """Apply an explicit camera subtype only inside its 3D size envelope."""
+    if camera_name == "Bus":
+        if meets_minimum_dimensions(dimensions, MIN_BUS_DIMS):
+            return "Bus"
+        if meets_minimum_dimensions(dimensions, MIN_TRUCK_DIMS):
+            return "Truck"
+        return "Van" if van_sized(dimensions) else current_name
+    if camera_name == "Truck":
+        if meets_minimum_dimensions(dimensions, MIN_TRUCK_DIMS):
+            return "Truck"
+        return "Van" if van_sized(dimensions) else current_name
+    return current_name
+
+
 def main() -> None:
     args = parse_args()
     if not (0 < args.camera_hold_min_overlap <= 1 and
@@ -995,6 +1148,8 @@ def main() -> None:
             not 0 <= args.vehicle_track_confirm_min_camera_confidence <= 1 or
             not 0 <= args.vehicle_track_confirm_min_overlap <= 1):
         raise ValueError("invalid vehicle-track confirmation parameters")
+    if not 0 < args.duplicate_min_bev_overlap <= 1:
+        raise ValueError("duplicate BEV overlap threshold must be in (0, 1]")
     sequence = args.sequence.resolve()
     output = (args.output or sequence / "detzero_output" /
               "improved_results.json").resolve()
@@ -1094,6 +1249,8 @@ def main() -> None:
                 for match in stats["camera_matches"]))
     }
     class_votes = defaultdict(Counter)
+    vehicle_subtype_votes = defaultdict(Counter)
+    vehicle_subtype_frames = defaultdict(Counter)
     generic_car_subtype_validations = 0
     confirmation_classes = set(args.camera_confirm_classes)
     removed_range = removed_unconfirmed = removed_dimensions = 0
@@ -1106,6 +1263,7 @@ def main() -> None:
     camera_hold_lidar_residuals = []
     camera_hold_position_corrections = []
     camera_held_with_lidar = camera_held_without_lidar = 0
+    camera_held_static = camera_held_moving = 0
     camera_holds_rejected_ego_overlap = 0
     maximum_camera_hold_age = 0
     active_states = {}
@@ -1115,9 +1273,6 @@ def main() -> None:
     previous_additions = []
     for frame_index, (row, frame) in enumerate(zip(rows, results)):
         evidence = frame_evidence[frame_index]
-        original_track_ids = {
-            int(obj["track_id"]) for obj in frame["objects"]
-        }
         timestamp_ns = int(frame.get(
             "lidar_sensor_timestamp_ns", frame.get("timestamp_ns",
                                                     row["timestamp_ns"])))
@@ -1137,15 +1292,19 @@ def main() -> None:
             match = record["match"]
             if match is not None:
                 matched_name = match["class"]
-                # The reviewed bag shows LiDAR vehicle subtypes are much more
-                # accurate than fisheye YOLO votes. Camera road-vehicle labels
-                # validate existence only; they never rewrite Car/Truck/Bus.
-                # In particular, generic YOLO Car validates Truck/Bus without
-                # collapsing the LiDAR-supported subtype.
                 if obj["name"] in {"Pedestrian", "Cyclist"}:
                     class_votes[track_id][matched_name] += (
                         match["confidence"] * max(record["overlap"], .25))
+                elif matched_name in {"Bus", "Truck"}:
+                    # Explicit COCO Bus/Truck predictions are subtype evidence.
+                    # Resolve them over the complete physical track below so a
+                    # single noisy fisheye view cannot flicker the 3D label.
+                    vehicle_subtype_votes[track_id][matched_name] += (
+                        match["confidence"] * max(record["overlap"], .25))
+                    vehicle_subtype_frames[track_id][matched_name] += 1
                 elif matched_name == "Car":
+                    # Generic Car confirms existence but must not collapse a
+                    # well-supported Truck or Bus subtype.
                     generic_car_subtype_validations += 1
             elif (not args.keep_unconfirmed and
                   obj["name"] in confirmation_classes and
@@ -1171,20 +1330,23 @@ def main() -> None:
                     'projection_overlap': float(record['overlap']),
                 }
                 used.add(record["detection_key"])
-                if (args.camera_track_hold and
-                        track_id in lidar_track_ids):
-                    next_active_states[track_id] = global_track_state(
-                        obj, frame_index, timestamp_ns, poses[frame_index],
-                        tracker_velocities.get((track_id, frame_index)),
-                        active_states.get(track_id))
+            if (args.camera_track_hold and track_id in lidar_track_ids and
+                    (match is not None or track_id in active_states)):
+                # Once a track has camera confirmation, every subsequent real
+                # LiDAR hit refreshes its global state. This makes a later
+                # CenterPoint miss interpolate from the newest measurement.
+                next_active_states[track_id] = global_track_state(
+                    obj, frame_index, timestamp_ns, poses[frame_index],
+                    tracker_velocities.get((track_id, frame_index)),
+                    active_states.get(track_id))
         frame["objects"] = kept
+        kept_track_ids = {int(obj["track_id"]) for obj in kept}
         projection_cache = {}
 
         if args.camera_track_hold:
             predictions = {}
             for track_id, state in active_states.items():
-                if (state["last_frame"] != frame_index - 1 or
-                        track_id in original_track_ids):
+                if track_id in kept_track_ids:
                     continue
                 prediction = predicted_hold_object(
                     state, frame_index, timestamp_ns, poses[frame_index],
@@ -1226,6 +1388,11 @@ def main() -> None:
                     camera_held_without_lidar += 1
                 else:
                     corrected, point_count, residual, correction = support
+                    if state.get("is_static", False):
+                        # Sparse surface returns validate a parked object but
+                        # must never walk its global center around the scene.
+                        corrected = np.asarray(obj["box"], dtype=float)
+                        correction = 0.0
                     corrected_at_camera = motion.box(
                         corrected, frame_index, match_record['camera'],
                         state.get('velocity'))
@@ -1252,9 +1419,10 @@ def main() -> None:
                     obj["lidar_support"] = int(point_count)
                     obj["lidar_cluster_residual_m"] = residual
                     obj["lidar_position_correction_m"] = correction
-                    global_center = (
-                        poses[frame_index] @ np.r_[corrected[:3], 1.0])[:3]
-                    state["global_center"] = global_center
+                    if not state.get("is_static", False):
+                        global_center = (
+                            poses[frame_index] @ np.r_[corrected[:3], 1.0])[:3]
+                        state["global_center"] = global_center
                     camera_held_with_lidar += 1
                     camera_hold_lidar_points.append(point_count)
                     camera_hold_lidar_residuals.append(residual)
@@ -1267,13 +1435,32 @@ def main() -> None:
                 obj["camera_confidence"] = float(
                     match_record["detection"]["confidence"])
                 obj["camera_projection_overlap"] = match_record["overlap"]
+                camera_name = match_record["detection"]["class"]
+                if camera_name in {"Bus", "Truck"}:
+                    vehicle_subtype_votes[track_id][camera_name] += (
+                        float(match_record["detection"]["confidence"]) *
+                        max(float(match_record["overlap"]), .25))
+                    vehicle_subtype_frames[track_id][camera_name] += 1
                 frame["objects"].append(obj)
                 next_active_states[track_id] = state
                 camera_held_by_class[obj["name"]] += 1
+                if state.get("is_static", False):
+                    camera_held_static += 1
+                else:
+                    camera_held_moving += 1
                 camera_hold_prediction_sources[obj["prediction_source"]] += 1
                 camera_hold_overlaps.append(match_record["overlap"])
                 maximum_camera_hold_age = max(
                     maximum_camera_hold_age, int(obj["hold_age_frames"]))
+            # Retain state silently across brief YOLO dropouts. No annotation
+            # is emitted until a compatible camera detection confirms the
+            # tracker prediction again.
+            for track_id, state in active_states.items():
+                if track_id in kept_track_ids or track_id in next_active_states:
+                    continue
+                elapsed = (timestamp_ns - int(state["timestamp_ns"])) * 1e-9
+                if 0 < elapsed <= args.camera_hold_max_dt:
+                    next_active_states[track_id] = state
         active_states = next_active_states
 
         if args.add_camera_objects:
@@ -1347,6 +1534,10 @@ def main() -> None:
 
     relabeled = Counter()
     size_relabels = Counter()
+    camera_subtype_relabels = Counter()
+    camera_subtype_size_outcomes = Counter()
+    dimension_enforced_relabels = Counter()
+    dimension_normalized_objects = 0
     size_ambiguous = 0
     size_unstable = 0
     for track_id, objects in track_objects.items():
@@ -1360,8 +1551,14 @@ def main() -> None:
             # Generic YOLO Car is existence evidence, not a subtype vote.
             resolved_name = consensus_vehicle_name(objects, dimensions)
             lidar_sizes = lidar_track_dimensions[track_id]
-            if vehicle_size_stable(lidar_sizes):
-                lidar_median = np.median(lidar_sizes, axis=0)
+            # Dimensions describe a rigid object and must not jump from one
+            # detector frame to the next.  Prefer real LiDAR observations over
+            # camera-only held boxes, then use their robust median for both the
+            # hard class envelope and every output box in this track.
+            lidar_median = (np.median(lidar_sizes, axis=0)
+                            if lidar_sizes else dimensions)
+            stable_size = vehicle_size_stable(lidar_sizes)
+            if stable_size:
                 candidates = vehicle_size_candidates(lidar_median)
                 if len(candidates) > 1:
                     size_ambiguous += 1
@@ -1370,18 +1567,41 @@ def main() -> None:
                 if size_name != resolved_name:
                     size_relabels[f"{resolved_name}->{size_name}"] += 1
                     resolved_name = size_name
+                camera_name = camera_vehicle_subtype(
+                    vehicle_subtype_votes[track_id],
+                    vehicle_subtype_frames[track_id])
+                if camera_name is not None:
+                    camera_size_name = camera_subtype_for_dimensions(
+                        camera_name, lidar_median, resolved_name)
+                    camera_subtype_size_outcomes[
+                        f"{camera_name}->{camera_size_name}"] += 1
+                    if camera_size_name != resolved_name:
+                        camera_subtype_relabels[
+                            f"{resolved_name}->{camera_size_name}"] += 1
+                        resolved_name = camera_size_name
             elif len(lidar_sizes) >= MIN_VEHICLE_SIZE_LIDAR_FRAMES:
                 size_unstable += 1
+            # Minimum dimensions are safety constraints, not probabilistic
+            # hints.  Apply them even when a track's raw size observations are
+            # noisy: an unstable hatchback-sized track may never remain a
+            # Truck/Bus, and a consistently tall Car is a Van.
+            enforced_name = enforce_vehicle_size_class(
+                resolved_name, lidar_median)
+            if enforced_name != resolved_name:
+                dimension_enforced_relabels[
+                    f"{resolved_name}->{enforced_name}"] += 1
+                resolved_name = enforced_name
+            normalized_dimensions = (
+                lidar_median if np.all(lidar_median <= MAX_DIMS[resolved_name])
+                else CANONICAL_DIMS[resolved_name])
             for obj in objects:
                 if obj["name"] != resolved_name:
                     relabeled[f"{obj['name']}->{resolved_name}"] += 1
                     obj["name"] = resolved_name
-                if np.any(np.asarray(obj["box"], float)[3:6] >
-                          MAX_DIMS[resolved_name]):
-                    replacement = (dimensions if np.all(
-                        dimensions <= MAX_DIMS[resolved_name]) else
-                        CANONICAL_DIMS[resolved_name])
-                    obj["box"][3:6] = replacement.tolist()
+                if not np.allclose(np.asarray(obj["box"], float)[3:6],
+                                   normalized_dimensions):
+                    dimension_normalized_objects += 1
+                    obj["box"][3:6] = normalized_dimensions.tolist()
             continue
         resolved_name = current_name
         votes = class_votes.get(track_id)
@@ -1403,6 +1623,7 @@ def main() -> None:
                       MAX_DIMS[resolved_name]):
                 obj["box"][3:6] = replacement_dimensions.tolist()
     removed_ego_area = Counter()
+    removed_overlap = Counter()
     for frame in results:
         retained = []
         for obj in frame["objects"]:
@@ -1412,7 +1633,9 @@ def main() -> None:
                 removed_ego_area[str(obj.get("name", "unknown"))] += 1
             else:
                 retained.append(obj)
-        frame["objects"] = retained
+        frame["objects"], frame_overlap_removed = suppress_overlapping_boxes(
+            retained, args.duplicate_min_bev_overlap)
+        removed_overlap.update(frame_overlap_removed)
 
     frame_times_ns = np.asarray([
         int(row.get('lidar_sensor_timestamp_ns') or row['timestamp_ns'])
@@ -1448,6 +1671,18 @@ def main() -> None:
                     "ego_area_intersection_by_class": dict(removed_ego_area),
                     "ego_area_m": {"length": 4.0, "width": 2.5,
                                    "center": [0.0, 0.0]},
+                    "overlapping_duplicates": sum(
+                        value for key, value in removed_overlap.items()
+                        if not key.startswith("class:")),
+                    "overlapping_duplicates_by_reason": {
+                        key: value for key, value in removed_overlap.items()
+                        if not key.startswith("class:")},
+                    "overlapping_duplicates_by_class": {
+                        key.split(":", 1)[1]: value
+                        for key, value in removed_overlap.items()
+                        if key.startswith("class:")},
+                    "duplicate_min_bev_overlap": (
+                        args.duplicate_min_bev_overlap),
                     "camera_unconfirmed_by_class": dict(
                         removed_unconfirmed_by_class)},
         "invalid_dimension_tracks": invalid_details,
@@ -1466,6 +1701,25 @@ def main() -> None:
             "relabelled_tracks": dict(size_relabels),
             "tracks_with_overlapping_size_profiles": size_ambiguous,
             "tracks_with_unstable_dimensions_skipped": size_unstable,
+            "vehicle_objects_dimension_normalized": dimension_normalized_objects,
+        },
+        "camera_vehicle_subtype_classification": {
+            "classes": ["Bus", "Truck"],
+            "minimum_confirmed_frames": MIN_CAMERA_SUBTYPE_FRAMES,
+            "minimum_weighted_vote": MIN_CAMERA_SUBTYPE_WEIGHT,
+            "minimum_winner_share": MIN_CAMERA_SUBTYPE_SHARE,
+            "generic_car_is_existence_only": True,
+            "relabelled_tracks": dict(camera_subtype_relabels),
+            "size_gated_camera_outcomes": dict(camera_subtype_size_outcomes),
+            "dimension_enforced_relabels": dict(dimension_enforced_relabels),
+            "minimum_dimensions_length_width_height_m": {
+                "Van": MIN_VAN_DIMS.tolist(),
+                "Truck": MIN_TRUCK_DIMS.tolist(),
+                "Bus": MIN_BUS_DIMS.tolist(),
+            },
+            "van_rule": (
+                "Car/undersized heavy vehicle must meet the strict Van "
+                "length-width-height minimum and remain below Truck size"),
         },
         "relabeled": dict(relabeled), "heading_flips_corrected": heading_flips,
         "heading_smoothing_applied": args.smooth_headings,
@@ -1505,6 +1759,12 @@ def main() -> None:
             "held_annotations": sum(camera_held_by_class.values()),
             "held_by_class": dict(camera_held_by_class),
             "prediction_sources": dict(camera_hold_prediction_sources),
+            "static_world_fixed_annotations": camera_held_static,
+            "moving_tracker_interpolated_annotations": camera_held_moving,
+            "static_position_policy": (
+                "fixed global center; tracker coast and sparse-point shifts ignored"),
+            "dropout_policy": (
+                "retain state without emitting boxes until YOLO confirms again"),
             "maximum_continuous_hold_frames": maximum_camera_hold_age,
             "held_with_lidar_support": camera_held_with_lidar,
             "held_without_lidar_support": camera_held_without_lidar,

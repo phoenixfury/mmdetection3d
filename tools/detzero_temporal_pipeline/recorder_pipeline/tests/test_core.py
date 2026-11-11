@@ -1,4 +1,5 @@
 import csv
+import json
 import math
 import struct
 
@@ -11,6 +12,8 @@ from recorder_pipeline.odometry import (
     FusedOdometrySeries, load_fused_odometry, interpolate_angle, pose_matrix)
 from recorder_pipeline.protos import bag_pb2, localization_pb2, lidar_pb2
 from recorder_pipeline.lidar import decode_raw
+from recorder_pipeline.calibration import install_fallback
+from recorder_pipeline.config import CAMERAS
 
 
 def encode_varint(value):
@@ -31,6 +34,31 @@ def write_csv(path, rows):
         writer = csv.DictWriter(file, fieldnames=list(rows[0]))
         writer.writeheader()
         writer.writerows(rows)
+
+
+def test_validated_calibration_fallback_is_installed_atomically(tmp_path):
+    identity = np.eye(4).tolist()
+    doc = {
+        'extrinsics': {
+            **{name: {'from': name, 'to': 'BASELINK', 'matrix': identity}
+               for name in CAMERAS},
+            'CLIDAR': {'from': 'CLIDAR', 'to': 'BASELINK', 'matrix': identity},
+        },
+        'intrinsics': {
+            name: {'camera_matrix': np.eye(3).tolist(), 'width': 1920, 'height': 1536}
+            for name in CAMERAS
+        },
+        'lidar_to_camera': {name: identity for name in CAMERAS},
+    }
+    source = tmp_path / 'asset.json'
+    output = tmp_path / 'converted' / 'calibration.json'
+    source.write_text(json.dumps(doc))
+    assert install_fallback(source, output) == doc
+    assert output.read_bytes() == source.read_bytes()
+
+    source.write_text('{}')
+    with pytest.raises(ValueError, match='incomplete'):
+        install_fallback(source, output)
 
 
 def make_fused(timestamp, x, yaw, status=1):

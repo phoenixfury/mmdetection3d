@@ -2,6 +2,7 @@
 from __future__ import annotations
 import argparse
 import json
+import os
 from pathlib import Path
 import numpy as np
 from .bag_io import bytes_value, field_map, integer, iter_record_payloads, repeated_bytes, unpack_doubles
@@ -54,6 +55,57 @@ def rotation_x(degrees: float) -> np.ndarray:
     angle = np.deg2rad(degrees)
     c, s = np.cos(angle), np.sin(angle)
     return np.array([[1,0,0],[0,c,-s],[0,s,c]])
+
+
+def validate_document(doc: dict) -> None:
+    """Validate the parts of a packaged calibration required by this pipeline."""
+    extrinsics = doc.get('extrinsics', {})
+    intrinsics = doc.get('intrinsics', {})
+    lidar_to_camera = doc.get('lidar_to_camera', {})
+    missing = [name for name in CAMERAS
+               if name not in extrinsics or name not in intrinsics or name not in lidar_to_camera]
+    if 'CLIDAR' not in extrinsics:
+        missing.append('CLIDAR')
+    if missing:
+        raise ValueError(f'fallback calibration is incomplete: {missing}')
+    for name in (*CAMERAS, 'CLIDAR'):
+        entry = extrinsics[name]
+        matrix = np.asarray(entry.get('matrix'), dtype=float)
+        if (entry.get('to') != 'BASELINK' or matrix.shape != (4, 4)
+                or not np.isfinite(matrix).all()
+                or not np.allclose(matrix[3], [0, 0, 0, 1], atol=1e-4)
+                or not np.allclose(matrix[:3, :3] @ matrix[:3, :3].T,
+                                   np.eye(3), atol=.05)):
+            raise ValueError(f'fallback calibration has invalid {name} extrinsic')
+    for name in CAMERAS:
+        intrinsic = intrinsics[name]
+        camera_matrix = np.asarray(intrinsic.get('camera_matrix'), dtype=float)
+        projection = np.asarray(lidar_to_camera[name], dtype=float)
+        if (camera_matrix.shape != (3, 3) or projection.shape != (4, 4)
+                or not np.isfinite(camera_matrix).all()
+                or not np.isfinite(projection).all()
+                or int(intrinsic.get('width', 0)) <= 0
+                or int(intrinsic.get('height', 0)) <= 0):
+            raise ValueError(f'fallback calibration has invalid {name} camera parameters')
+
+
+def install_fallback(source: Path, output: Path) -> dict:
+    """Validate and atomically install an explicit fallback calibration."""
+    source = source.expanduser().resolve()
+    if not source.is_file():
+        raise FileNotFoundError(f'fallback calibration does not exist: {source}')
+    doc = json.loads(source.read_text())
+    validate_document(doc)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    if source == output.resolve():
+        return doc
+    temporary = output.with_suffix('.fallback.tmp.json')
+    try:
+        temporary.write_bytes(source.read_bytes())
+        os.replace(str(temporary), str(output))
+    finally:
+        temporary.unlink(missing_ok=True)
+    return doc
 
 
 def extract(bag: Path, output: Path, lidar_to_base: list[float] | None = None,

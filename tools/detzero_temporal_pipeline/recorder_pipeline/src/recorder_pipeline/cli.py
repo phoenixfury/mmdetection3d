@@ -345,6 +345,14 @@ def create_parser() -> argparse.ArgumentParser:
 
         if command in ("all", "calibration"):
             stage.add_argument(
+                "--calibration-fallback",
+                type=Path,
+                default=None,
+                help=("Validated calibration JSON used only when the BAG has no "
+                      "embedded calibration topics"),
+            )
+
+            stage.add_argument(
                 "--lidar-to-base",
                 type=float,
                 nargs=16,
@@ -541,12 +549,24 @@ def main(argv: Optional[list[str]] = None) -> None:
     # Calibration
     # ---------------------------------------------------------
     if args.command in ("all", "calibration"):
-        calibration.extract(
-            bag,
-            output / "calibration.json",
-            args.lidar_to_base,
-            args.camera_pitch,
-        )
+        try:
+            calibration.extract(
+                bag,
+                output / "calibration.json",
+                args.lidar_to_base,
+                args.camera_pitch,
+            )
+        except FileNotFoundError as error:
+            if args.calibration_fallback is None:
+                raise
+            calibration.install_fallback(
+                args.calibration_fallback,
+                output / "calibration.json",
+            )
+            print("Embedded calibration unavailable: {}".format(error))
+            print("Using calibration fallback: {}".format(
+                args.calibration_fallback.expanduser().resolve()
+            ))
 
         print("Calibration written")
 

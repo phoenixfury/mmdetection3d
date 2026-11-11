@@ -100,6 +100,11 @@ OCam preparer     MMDET3D_ROOT/tools/custom_data/prepare_fisheye3dod_inference.p
 The vendored calibration is an exact copy of the requested September 16 file
 (SHA-256 `28e2d6a39169e6bb44f6af2a8b410b204526270fbed5e87655728b9953e383d7`).
 Use `--calibration` for a different vehicle or sensor mount.
+During extraction the recorder first uses calibration topics embedded in the
+BAG. If those topics are absent, `pipeline.py` validates and installs this
+resolved calibration as an explicit fallback. Invalid embedded calibration is
+still an error and is never silently replaced. Direct recorder CLI users can
+request the same behavior with `--calibration-fallback /path/to/calibration.json`.
 
 ## 3. Run the whole pipeline
 
@@ -110,8 +115,9 @@ python integration_scripts/pipeline.py --bag "$BAG" \
   --combined-output "$PWD/datasets/combined_improved_detzero_rosa"
 ```
 
-Validated-bag command (choose `create` for a new combined root or `append` for
-an existing compatible root):
+Validated-bag command (choose `create` for a new combined root, `append` for
+a new sequence in an existing root, or `replace` to atomically refresh a
+sequence already present there):
 
 ```bash
 cd /home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete
@@ -124,7 +130,7 @@ conda run --no-capture-output -n openmmlab python integration_scripts/pipeline.p
 
 All paths are explicit and the entry point works from any working directory. Unless overridden, it uses:
 
-1. **Extract**: raw camera streams to `runs/30_09/converted/`, synchronized `dataset/manifest.csv`, native JPEG images, float32 XYZI PCD, odometry and `odometry_poses.npy`. The default `--camera-sync-clock auto` compares LiDAR acquisition and recorder/read clocks. A sustained set of exact acquisition-time camera matches selects the sensor clock even when a recorder backlog creates more read-time matches. Old queued LiDAR history outside the actual camera interval is discarded; it is never shifted forward to fill the video. Read time and fixed-offset alignment are only fallbacks for a genuinely incomparable device clock. PCL LiDAR chunks decode in parallel (`--lidar-workers 4` by default); lower it to `1` on a constrained machine or raise it when CPU/storage bandwidth is available. Both original timestamps and the clock decision remain in the manifests.
+1. **Extract**: raw camera streams to `runs/30_09/converted/`, synchronized `dataset/manifest.csv`, native JPEG images, float32 XYZI PCD, odometry and `odometry_poses.npy`. Missing BAG calibration topics fall back to the validated resolved `--calibration` file. The default `--camera-sync-clock auto` compares LiDAR acquisition and recorder/read clocks. A sustained set of exact acquisition-time camera matches selects the sensor clock even when a recorder backlog creates more read-time matches. Old queued LiDAR history outside the actual camera interval is discarded; it is never shifted forward to fill the video. Read time and fixed-offset alignment are only fallbacks for a genuinely incomparable device clock. PCL LiDAR chunks decode in parallel (`--lidar-workers 4` by default); lower it to `1` on a constrained machine or raise it when CPU/storage bandwidth is available. Both original timestamps and the clock decision remain in the manifests.
 2. **DetZero**: `dataset/detzero_output/results.json`, tracker outputs and temporal sidecars. The Waymo position refiner is **disabled by default**; supply `--enable-position-refiner` and real checkpoints to enable.
 3. **Improve**: `dataset/detzero_output/improved_results.json`, improved temporal sidecars and report. YOLO class checking and camera-time compensation are enabled.
 4. **Video**: `dataset/detzero_output/improved_videos/`, one MP4 per camera (`arc_f`, `arc_sl`, `arc_sr`, `arc_r`), `lidar_bev.mp4`, `all_cameras_plus_bev.mp4`, plus a JSON report. The **same BGR class mapping** is applied on camera image and LiDAR BEV. `[hold]` labels identify extrapolated camera-track-hold boxes.
@@ -178,6 +184,23 @@ python integration_scripts/render_improved_detzero.py \
 ```
 
 The overlay transforms LiDAR-time 3D boxes to the selected camera packet time using pose SLERP where valid, and draws visible 3D box edges with the **native KB4** camera projection. Moving-object velocity compensation applies only when the improved object explicitly contains `velocity_world`; otherwise only ego motion is compensated. No LiDAR scan deskew or ground-truth exposure timestamps are claimed. On invalid/unbracketed camera times it falls back to the LiDAR-time projection, reported in `visualization_report.json`. All four cameras and BEV use the same 3D-box class colors.
+
+### Post-processing invariants
+
+The `improve` stage applies one class and one robust LiDAR-median size to each
+vehicle track. A Car becomes Van only when its median box is at least
+`4.2 x 1.75 x 1.85 m`; tall hatchbacks below that complete envelope remain
+Car. Truck and Bus labels require at least `5.3 x 1.85 x 1.8 m` and
+`10.0 x 2.55 x 3.0 m`, respectively. YOLO Truck/Bus votes cannot bypass these
+3D minimums.
+
+Overlapping duplicate BEV footprints are suppressed at 10% intersection over
+the smaller footprint. A real LiDAR detection wins over a predicted camera
+hold, then higher confidence wins, then the prediction with the shorter time
+since its last LiDAR detection wins. Vehicle and pedestrian/cyclist families
+are compared separately so a pedestrian partly occluded by a vehicle is not
+removed. Override the threshold with `--duplicate-min-bev-overlap` through
+`pipeline.py --improve-args` when a dataset needs a different policy.
 
 ## 6. Tests
 

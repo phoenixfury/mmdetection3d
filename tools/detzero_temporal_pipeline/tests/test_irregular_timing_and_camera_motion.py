@@ -225,7 +225,7 @@ def test_vehicle_consensus_removes_bus_truck_flicker():
 def test_vehicle_size_classification_uses_track_dimensions():
     from improve_detzero_annotations import classify_vehicle_by_size
     classify = classify_vehicle_by_size
-    assert classify(np.array([3.7, 1.73, 1.82]), 'Car') == 'Van'
+    assert classify(np.array([4.6, 1.9, 2.0]), 'Car') == 'Van'
     assert classify(np.array([4.45, 1.90, 1.62]), 'Car') == 'Car'
     assert classify(np.array([5.6, 2.2, 2.2]), 'Car') == 'Truck'
     assert classify(np.array([11.8, 3.0, 3.6]), 'Car') == 'Truck'

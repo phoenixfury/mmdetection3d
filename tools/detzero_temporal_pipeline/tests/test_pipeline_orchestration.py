@@ -1,4 +1,4 @@
-"""Check stage ordering and switching between create, append and extend."""
+"""Check stage ordering and switching between combined-dataset modes."""
 from __future__ import annotations
 import sys
 from pathlib import Path
@@ -20,6 +20,10 @@ def test_one_pass_stages(tmp_path):
     assert '--camera-sync-clock auto' in ' '.join(output[0][1])
     dataset = next(line for name, line, _ in output if name == 'dataset')
     assert '--source-calibration' in dataset
+    extract = output[0][1]
+    assert '--calibration-fallback' in extract
+    assert extract[extract.index('--calibration-fallback') + 1].endswith(
+        'assets/calibration/calibration.json')
     assert 'build_combined_dataset.py' in dataset[1]
     assert 'render_combined_projection_audit.py' in output[-1][1][1]
 
@@ -48,3 +52,14 @@ def test_append_and_extend(tmp_path):
     assert '--base' in cmds[-1][1]
     with pytest.raises(FileExistsError):
         commands(arguments(['--start-at', 'dataset', '--combined-output', str(combined)]))
+
+
+def test_replace_mode_uses_replace_sequence(tmp_path):
+    combined = tmp_path / 'combined'; combined.mkdir()
+    args = arguments(['--start-at', 'dataset', '--stop-after', 'dataset',
+                      '--sequence-name', 'extra', '--combined-output', str(combined),
+                      '--dataset-mode', 'replace'])
+    cmds, _ = commands(args)
+    line = cmds[0][1]
+    assert '--replace-sequence' in line
+    assert '--add-sequence' not in line
