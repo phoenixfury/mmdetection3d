@@ -236,6 +236,27 @@ def footprint_corners(box: np.ndarray) -> np.ndarray:
     return (base @ rotation.T + np.array([x, y])).astype(np.float32)
 
 
+def footprint_contains_origin(box: np.ndarray, tolerance: float = 1e-6) -> bool:
+    """Return whether an oriented box footprint contains LiDAR (0, 0)."""
+    x, y, _, length, width, _, yaw = np.asarray(box, dtype=float)[:7]
+    cosine, sine = math.cos(float(yaw)), math.sin(float(yaw))
+    # Rotate the vector from the box center to the origin by -yaw.
+    local_x = -x * cosine - y * sine
+    local_y = x * sine - y * cosine
+    return (abs(local_x) <= length / 2 + tolerance and
+            abs(local_y) <= width / 2 + tolerance)
+
+
+def footprint_intersects_ego_area(box: np.ndarray,
+                                  length: float = 4.0,
+                                  width: float = 2.5,
+                                  tolerance: float = 1e-6) -> bool:
+    """Return whether a box overlaps the centered protected ego rectangle."""
+    overlap = ego_footprint_overlap(
+        box, front=length / 2, rear=length / 2, half_width=width / 2)
+    return overlap > tolerance
+
+
 def ego_footprint_overlap(box: np.ndarray, front: float, rear: float,
                           half_width: float) -> float:
     """Intersection area with a conservative protected ego body core."""
@@ -416,7 +437,10 @@ def run_yolo(rows: list[dict], sequence: Path, args: argparse.Namespace,
             classes=sorted(YOLO_CLASSES), device=device,
             batch=len(batch), verbose=False)
         if device != "cpu":
-            predict_options["half"] = True
+            # Ultralytics renamed the deprecated ``half`` inference flag to
+            # ``quantize``.  16 requests FP16 inference on CUDA while keeping
+            # CPU inference in FP32.
+            predict_options["quantize"] = 16
         predictions = model.predict(
             [str(path) for _, path in batch], **predict_options)
         for (key, _), prediction in zip(batch, predictions):
@@ -1378,6 +1402,18 @@ def main() -> None:
             if np.any(np.asarray(obj["box"], float)[3:6] >
                       MAX_DIMS[resolved_name]):
                 obj["box"][3:6] = replacement_dimensions.tolist()
+    removed_ego_area = Counter()
+    for frame in results:
+        retained = []
+        for obj in frame["objects"]:
+            if (str(obj.get("name")) != "Pedestrian" and
+                    footprint_intersects_ego_area(
+                        np.asarray(obj["box"], dtype=float))):
+                removed_ego_area[str(obj.get("name", "unknown"))] += 1
+            else:
+                retained.append(obj)
+        frame["objects"] = retained
+
     frame_times_ns = np.asarray([
         int(row.get('lidar_sensor_timestamp_ns') or row['timestamp_ns'])
         for row in rows], dtype=np.int64)
@@ -1408,6 +1444,10 @@ def main() -> None:
         "removed": {"over_distance": removed_range,
                     "invalid_track_dimensions": removed_dimensions,
                     "camera_unconfirmed": removed_unconfirmed,
+                    "ego_area_intersection": sum(removed_ego_area.values()),
+                    "ego_area_intersection_by_class": dict(removed_ego_area),
+                    "ego_area_m": {"length": 4.0, "width": 2.5,
+                                   "center": [0.0, 0.0]},
                     "camera_unconfirmed_by_class": dict(
                         removed_unconfirmed_by_class)},
         "invalid_dimension_tracks": invalid_details,

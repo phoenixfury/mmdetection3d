@@ -1,0 +1,4 @@
+set(__QT_DEPLOY_TARGET_decode_lidar_FILE /home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-conda-test/decode_lidar)
+set(__QT_DEPLOY_TARGET_decode_lidar_TYPE EXECUTABLE)
+set(__QT_DEPLOY_TARGET_test_xyzi_writer_FILE /home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-conda-test/test_xyzi_writer)
+set(__QT_DEPLOY_TARGET_test_xyzi_writer_TYPE EXECUTABLE)

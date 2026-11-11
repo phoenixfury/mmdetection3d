@@ -37,6 +37,23 @@ def rotation(yaw):
     return out
 
 
+def test_ego_origin_box_filter_is_orientation_aware():
+    from improve_detzero_annotations import (footprint_contains_origin,
+                                              footprint_intersects_ego_area)
+    assert footprint_contains_origin(np.array([0., 0., 0., 4., 2., 1.5, .7]))
+    assert footprint_contains_origin(np.array([1.9, 0., 0., 4., 2., 1.5, 0.]))
+    assert not footprint_contains_origin(np.array([2.1, 0., 0., 4., 2., 1.5, 0.]))
+    # A 90-degree box has its short side along x.
+    assert not footprint_contains_origin(
+        np.array([1.1, 0., 0., 4., 2., 1.5, np.pi / 2]))
+    # The box need not contain the origin: touching the 4 x 2.5 m protected
+    # ego area is sufficient for removal.
+    assert footprint_intersects_ego_area(
+        np.array([3.0, 0., 0., 2.2, 1., 1.5, 0.]))
+    assert not footprint_intersects_ego_area(
+        np.array([3.2, 0., 0., 2.2, 1., 1.5, 0.]))
+
+
 def test_timestep_irregular_and_reverse(filters):
     helper, _ = filters
     assert helper.elapsed_seconds(1_150_000_000, 1_000_000_000, .5) == pytest.approx(.15)
@@ -115,7 +132,7 @@ def test_camera_compensation_safe_fallback():
     from camera_motion import CameraMotion
     p = np.stack([np.eye(4), np.eye(4)])
     rows = [dict(lidar_sensor_timestamp_ns=1_000_000_000,
-                 camera_sync_clock='read', arc_r_timestamp_ns=1_050_000_000),
+                 camera_sync_clock='unknown', arc_r_timestamp_ns=1_050_000_000),
             dict(lidar_sensor_timestamp_ns=1_500_000_000,
                  camera_sync_clock='sensor', arc_r_timestamp_ns=1_510_000_000)]
     motion = CameraMotion(rows, p)
@@ -124,6 +141,24 @@ def test_camera_compensation_safe_fallback():
     assert motion.box(np.array([5,0,0,2,2,2,0]), 0, 'ARC_R') == pytest.approx([5,0,0,2,2,2,0])
     blocked = CameraMotion(rows, p, enabled=False)
     assert blocked.geometry(0, 'ARC_R')['reason'] == 'disabled_by_user'
+
+
+def test_legacy_sensor_clock_reconstructed_from_camera_delta():
+    from camera_motion import CameraMotion
+    p0, p1 = np.eye(4), np.eye(4)
+    p1[0, 3] = 5
+    rows = []
+    for stamp, delta in ((1_000_000_000, 50_000_000),
+                         (1_500_000_000, 0)):
+        row = {'lidar_sensor_timestamp_ns': stamp}
+        for camera in ('arc_f', 'arc_r', 'arc_sl', 'arc_sr'):
+            row[camera + '_delta_ns'] = delta
+        rows.append(row)
+    motion = CameraMotion(rows, np.stack([p0, p1]))
+    details = motion.details(0, 'ARC_F')
+    assert details['applied']
+    assert details['camera_timestamp_origin'] == 'reconstructed_from_sync_delta'
+    assert details['camera_minus_lidar_seconds'] == pytest.approx(.05)
 
 
 def test_camera_compensated_matching(monkeypatch):

@@ -108,16 +108,27 @@ def export(converted: Path, output: Path, odometry_dir: Path | None = None,
             raise ValueError(f'duplicate LiDAR timestamp in synchronization manifest: {timestamp}')
         tokens.add(timestamp)
         sensor_ns = int(row.get('lidar_sensor_timestamp_ns') or timestamp)
+        sync_clock = row.get('camera_sync_clock', 'sensor')
+        # Odometry and cameras must use the same selected clock domain.  Some
+        # recorders publish an embedded LiDAR acquisition timestamp with a
+        # fixed offset from every other sensor; in read mode, querying poses at
+        # that offset timestamp would reject the whole otherwise-valid scene.
+        # The synchronization target is authoritative.  It can be an aligned
+        # acquisition timestamp when out-of-order LiDAR arrivals require sensor
+        # ordering but cameras and odometry live in the recorder timescale.
+        pose_target_ns = int(row.get('camera_sync_target_ns') or
+                             (timestamp if sync_clock == 'read' else sensor_ns))
         pose = None
         if samples is not None:
             try:
-                pose = samples.at(sensor_ns)
+                pose = samples.at(pose_target_ns)
             except ValueError as error:
                 if missing_odometry_policy == 'error':
                     raise
                 skipped_odometry.append({
                     'timestamp_ns': timestamp,
                     'lidar_sensor_timestamp_ns': sensor_ns,
+                    'odometry_target_timestamp_ns': pose_target_ns,
                     'reason': str(error),
                 })
                 continue
@@ -135,8 +146,11 @@ def export(converted: Path, output: Path, odometry_dir: Path | None = None,
             point_count = reuse_binary_pcd(legacy_pcd, lidar_dest, overwrite)
         item = dict(timestamp_ns=timestamp, lidar_sensor_timestamp_ns=sensor_ns,
                     lidar_transport_delay_ns=timestamp - sensor_ns,
-                    camera_sync_clock=row.get('camera_sync_clock', ''),
+                    camera_sync_clock=sync_clock,
                     camera_sync_target_ns=row.get('camera_sync_target_ns', ''),
+                    lidar_order_clock=row.get('lidar_order_clock', sync_clock),
+                    sensor_to_sync_offset_ns=row.get('sensor_to_sync_offset_ns', 0),
+                    odometry_target_timestamp_ns=pose_target_ns,
                     lidar_pcd=lidar_relative.as_posix(), point_count=point_count)
         for camera in CAMERAS:
             prefix = camera.lower()
@@ -202,7 +216,8 @@ def export(converted: Path, output: Path, odometry_dir: Path | None = None,
                     },
                     odometry=(dict(source_dir=str(odometry_dir),
                                    timestamp_unit=pose_timestamp_unit,
-                                   clock='EgoPoseFused.timestamp',
+                                   clock=('EgoPoseFused.timestamp aligned to the selected '
+                                          'camera/LiDAR synchronization domain'),
                                    frame='pose frame in source message; user must verify',
                                    matrices='T_world_base assuming Rz(yaw)Ry(pitch)Rx(roll)',
                                    method='bracketed interpolation, no extrapolation',

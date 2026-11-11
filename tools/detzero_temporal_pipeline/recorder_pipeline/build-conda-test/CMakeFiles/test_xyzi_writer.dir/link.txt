@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/test_xyzi_writer.dir/link.d CMakeFiles/test_xyzi_writer.dir/tests/test_xyzi_writer.cpp.o -o test_xyzi_writer

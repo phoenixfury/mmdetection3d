@@ -98,6 +98,59 @@ def test_sync_uses_sensor_clock_and_rate(tmp_path):
         synchronize(tmp_path,tmp_path/'b.csv',tolerance_ms=1,sample_rate=0,camera_sync_clock='read')
 
 
+def test_sync_auto_aligns_backlogged_lidar_in_acquisition_order(tmp_path):
+    # Recorder arrival order is sensor 100, 300, 200.  The minimum transport
+    # delay is the fixed +900 ns sensor-to-recorder offset; the rest is backlog.
+    write_csv(tmp_path/'lidar_manifest.csv', [
+        dict(timestamp_ns=1100, sensor_timestamp_ns=100, path='lidar/a.bin'),
+        dict(timestamp_ns=1200, sensor_timestamp_ns=300, path='lidar/c.bin'),
+        dict(timestamp_ns=1300, sensor_timestamp_ns=200, path='lidar/b.bin'),
+    ])
+    write_csv(tmp_path/'camera_manifest.csv', [
+        dict(sensor=camera, timestamp_ns=t, path=f'images/{camera}/{t}.jpg')
+        for camera in ('ARC_F','ARC_R','ARC_SL','ARC_SR')
+        for t in (1000, 1100, 1200)
+    ])
+    assert synchronize(tmp_path, tmp_path/'s.csv', tolerance_ms=.000001,
+                       sample_rate=0) == 3
+    with (tmp_path/'s.csv').open() as file:
+        rows = list(csv.DictReader(file))
+    assert [int(row['lidar_sensor_timestamp_ns']) for row in rows] == [100, 200, 300]
+    assert [int(row['camera_sync_target_ns']) for row in rows] == [1000, 1100, 1200]
+    assert all(row['camera_sync_clock'] == 'read' for row in rows)
+    assert all(row['lidar_order_clock'] == 'sensor' for row in rows)
+    assert all(int(row['sensor_to_sync_offset_ns']) == 900 for row in rows)
+
+
+def test_sync_auto_discards_queued_history_when_sensor_clock_overlaps_cameras(tmp_path):
+    # Recorder arrivals cover the entire camera interval, but the first ten
+    # payloads are old queued history.  The overlapping acquisition timestamps
+    # must be used directly instead of shifting the history into the video.
+    lidar = [
+        dict(timestamp_ns=2_000 + i * 10, sensor_timestamp_ns=1_000 + i * 10,
+             path=f'lidar/old-{i}.bin')
+        for i in range(10)
+    ] + [
+        dict(timestamp_ns=2_100 + i * 10, sensor_timestamp_ns=2_100 + i * 10,
+             path=f'lidar/current-{i}.bin')
+        for i in range(10)
+    ]
+    write_csv(tmp_path/'lidar_manifest.csv', lidar)
+    write_csv(tmp_path/'camera_manifest.csv', [
+        dict(sensor=camera, timestamp_ns=t, path=f'images/{camera}/{t}.jpg')
+        for camera in ('ARC_F','ARC_R','ARC_SL','ARC_SR')
+        for t in range(2_000, 2_200, 10)
+    ])
+    assert synchronize(tmp_path, tmp_path/'s.csv', tolerance_ms=.000001,
+                       sample_rate=0) == 10
+    with (tmp_path/'s.csv').open() as file:
+        rows = list(csv.DictReader(file))
+    assert all(row['camera_sync_clock'] == 'sensor' for row in rows)
+    assert [int(row['lidar_sensor_timestamp_ns']) for row in rows] == [
+        2_100 + i * 10 for i in range(10)]
+    assert all(int(row['sensor_to_sync_offset_ns']) == 0 for row in rows)
+
+
 def test_decode_fused_topic_and_interpolate(tmp_path):
     folder = tmp_path/'FusedOdometry'
     create_odometry(folder,[make_fused(1000,1.,3.1),make_fused(1100,3.,-3.1)],

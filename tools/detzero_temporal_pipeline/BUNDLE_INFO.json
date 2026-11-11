@@ -1,5 +1,5 @@
 {
-  "bundle_version": "temporal_pipeline_v2",
+  "bundle_version": "temporal_pipeline_v3_combined_visualization",
   "includes_complete_detzero_sources": true,
   "includes_complete_recorder_sources": true,
   "includes_model_weights": false,
@@ -7,5 +7,35 @@
   "new_fix_1": "per-acquisition-timestamp forward and reverse Kalman F/Q and postprocess speed",
   "new_fix_2": "camera-time ego SLERP, tracked object velocity and point ego-warp during projection",
   "legacy_annotations_preserved": true,
-  "file_count": 710
+  "file_count": 710,
+  "unified_runner": "integration_scripts/pipeline.py",
+  "dataset_builder": "integration_scripts/build_combined_dataset.py",
+  "video_script": "integration_scripts/render_improved_detzero.py",
+  "stage_order": [
+    "extract",
+    "detzero",
+    "improve",
+    "visualize",
+    "prepare",
+    "dataset"
+  ],
+  "video_outputs": [
+    "ARC_F",
+    "ARC_SL",
+    "ARC_SR",
+    "ARC_R",
+    "LiDAR_BEV",
+    "combined"
+  ],
+  "external_requirements": [
+    "mmdetection3d repository and CenterPoint config",
+    "CenterPoint checkpoint",
+    "YOLO weights",
+    "800x800 OCam calibration",
+    "prepare_fisheye3dod_inference.py",
+    "ocamcamera.py Python import",
+    "calibrated input BAG",
+    "PCL/protobuf LiDAR decoder build"
+  ],
+  "test_status": "31 passed in local CPU-only suite; real GPU/BAG inference not executed"
 }

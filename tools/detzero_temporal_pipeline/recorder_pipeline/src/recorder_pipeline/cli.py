@@ -187,6 +187,7 @@ def lidar_stage(
     encoding: str,
     components: int,
     executable: str,
+    workers: int = 1,
 ) -> Optional[int]:
     """Decode raw or PCL-compressed LiDAR recordings."""
 
@@ -204,6 +205,9 @@ def lidar_stage(
         str(bag),
         str(output),
     ]
+    if workers < 1:
+        raise ValueError("LiDAR workers must be positive")
+    command.extend(["--workers", str(workers)])
 
     if limit:
         command.extend(["--limit", str(limit)])
@@ -332,6 +336,12 @@ def create_parser() -> argparse.ArgumentParser:
                 default="decode_lidar",
                 help="Path to compiled C++ LiDAR decoder",
             )
+            stage.add_argument(
+                "--lidar-workers",
+                type=int,
+                default=1,
+                help="Parallel PCL LiDAR chunk decoders (use 2-4 if storage/CPU allow)",
+            )
 
         if command in ("all", "calibration"):
             stage.add_argument(
@@ -363,8 +373,9 @@ def create_parser() -> argparse.ArgumentParser:
 
             stage.add_argument(
                 "--camera-sync-clock",
-                choices=("sensor", "read"),
-                default="sensor",
+                choices=("auto", "sensor", "read"),
+                default="auto",
+                help="Auto-select the LiDAR timestamp domain with the most camera matches",
             )
 
         if command in ("all", "export"):
@@ -511,6 +522,7 @@ def main(argv: Optional[list[str]] = None) -> None:
             encoding=args.lidar_encoding,
             components=args.raw_components,
             executable=args.lidar_decoder,
+            workers=args.lidar_workers,
         )
 
         if count is not None:

@@ -1,0 +1,2760 @@
+
+---
+events:
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineSystem.cmake:12 (find_program)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_UNAME"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "uname"
+    candidate_directories:
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/usr/bin/"
+      - "/usr/condabin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/bin/"
+      - "/usr/lib64/ccache/"
+      - "/usr/local/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+      - "/bin/"
+    searched_directories:
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/uname"
+    found: "/usr/bin/uname"
+    search_context:
+      ENV{PATH}:
+        - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz"
+        - "/usr/bin"
+        - "/usr/condabin"
+        - "/home/mostafa/.local/bin"
+        - "/home/mostafa/bin"
+        - "/usr/lib64/ccache"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/snapd/snap/bin"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineSystem.cmake:212 (message)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      The system is: Linux - 7.2.12-200.fc44.x86_64 - x86_64
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeUnixFindMake.cmake:5 (find_program)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_MAKE_PROGRAM"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "gmake"
+      - "make"
+      - "smake"
+    candidate_directories:
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/usr/bin/"
+      - "/usr/condabin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/bin/"
+      - "/usr/lib64/ccache/"
+      - "/usr/local/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+    searched_directories:
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/gmake"
+    found: "/usr/bin/gmake"
+    search_context:
+      ENV{PATH}:
+        - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz"
+        - "/usr/bin"
+        - "/usr/condabin"
+        - "/home/mostafa/.local/bin"
+        - "/home/mostafa/bin"
+        - "/usr/lib64/ccache"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/snapd/snap/bin"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompiler.cmake:73 (find_program)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:64 (_cmake_find_compiler)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER"
+    description: "C compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "cc"
+      - "gcc"
+      - "cl"
+      - "bcc"
+      - "xlc"
+      - "icx"
+      - "clang"
+    candidate_directories:
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/usr/bin/"
+      - "/usr/condabin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/bin/"
+      - "/usr/lib64/ccache/"
+      - "/usr/local/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+    searched_directories:
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/cc"
+    found: "/usr/bin/cc"
+    search_context:
+      ENV{PATH}:
+        - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz"
+        - "/usr/bin"
+        - "/usr/condabin"
+        - "/home/mostafa/.local/bin"
+        - "/home/mostafa/bin"
+        - "/usr/lib64/ccache"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/snapd/snap/bin"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:468 (find_file)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:506 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCCompilerId.c.in"
+    candidate_directories:
+      - "/usr/share/cmake/Modules/"
+    found: "/usr/share/cmake/Modules/CMakeCCompilerId.c.in"
+    search_context:
+      ENV{PATH}:
+        - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz"
+        - "/usr/bin"
+        - "/usr/condabin"
+        - "/home/mostafa/.local/bin"
+        - "/home/mostafa/bin"
+        - "/usr/lib64/ccache"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/snapd/snap/bin"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: /usr/bin/cc 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+      
+      The C compiler identification is GNU, found in:
+        /home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/4.3.0/CompilerIdC/a.out
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_AR"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "ar"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/usr/condabin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/bin/"
+      - "/usr/lib64/ccache/"
+      - "/usr/local/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+    found: "/usr/bin/ar"
+    search_context:
+      ENV{PATH}:
+        - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz"
+        - "/usr/bin"
+        - "/usr/condabin"
+        - "/home/mostafa/.local/bin"
+        - "/home/mostafa/bin"
+        - "/usr/lib64/ccache"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/snapd/snap/bin"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_RANLIB"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "ranlib"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/usr/condabin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/bin/"
+      - "/usr/lib64/ccache/"
+      - "/usr/local/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+    found: "/usr/bin/ranlib"
+    search_context:
+      ENV{PATH}:
+        - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz"
+        - "/usr/bin"
+        - "/usr/condabin"
+        - "/home/mostafa/.local/bin"
+        - "/home/mostafa/bin"
+        - "/usr/lib64/ccache"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/snapd/snap/bin"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_STRIP"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "strip"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/usr/condabin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/bin/"
+      - "/usr/lib64/ccache/"
+      - "/usr/local/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+    found: "/usr/bin/strip"
+    search_context:
+      ENV{PATH}:
+        - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz"
+        - "/usr/bin"
+        - "/usr/condabin"
+        - "/home/mostafa/.local/bin"
+        - "/home/mostafa/bin"
+        - "/usr/lib64/ccache"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/snapd/snap/bin"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_LINKER"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "ld"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/usr/condabin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/bin/"
+      - "/usr/lib64/ccache/"
+      - "/usr/local/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+    found: "/usr/bin/ld"
+    search_context:
+      ENV{PATH}:
+        - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz"
+        - "/usr/bin"
+        - "/usr/condabin"
+        - "/home/mostafa/.local/bin"
+        - "/home/mostafa/bin"
+        - "/usr/lib64/ccache"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/snapd/snap/bin"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_NM"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "nm"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/usr/condabin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/bin/"
+      - "/usr/lib64/ccache/"
+      - "/usr/local/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+    found: "/usr/bin/nm"
+    search_context:
+      ENV{PATH}:
+        - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz"
+        - "/usr/bin"
+        - "/usr/condabin"
+        - "/home/mostafa/.local/bin"
+        - "/home/mostafa/bin"
+        - "/usr/lib64/ccache"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/snapd/snap/bin"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_OBJDUMP"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "objdump"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/usr/condabin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/bin/"
+      - "/usr/lib64/ccache/"
+      - "/usr/local/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+    found: "/usr/bin/objdump"
+    search_context:
+      ENV{PATH}:
+        - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz"
+        - "/usr/bin"
+        - "/usr/condabin"
+        - "/home/mostafa/.local/bin"
+        - "/home/mostafa/bin"
+        - "/usr/lib64/ccache"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/snapd/snap/bin"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_OBJCOPY"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "objcopy"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/usr/condabin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/bin/"
+      - "/usr/lib64/ccache/"
+      - "/usr/local/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+    found: "/usr/bin/objcopy"
+    search_context:
+      ENV{PATH}:
+        - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz"
+        - "/usr/bin"
+        - "/usr/condabin"
+        - "/home/mostafa/.local/bin"
+        - "/home/mostafa/bin"
+        - "/usr/lib64/ccache"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/snapd/snap/bin"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_READELF"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "readelf"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/usr/condabin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/bin/"
+      - "/usr/lib64/ccache/"
+      - "/usr/local/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+    found: "/usr/bin/readelf"
+    search_context:
+      ENV{PATH}:
+        - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz"
+        - "/usr/bin"
+        - "/usr/condabin"
+        - "/home/mostafa/.local/bin"
+        - "/home/mostafa/bin"
+        - "/usr/lib64/ccache"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/snapd/snap/bin"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_DLLTOOL"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "dlltool"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/usr/condabin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/bin/"
+      - "/usr/lib64/ccache/"
+      - "/usr/local/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+    searched_directories:
+      - "/usr/bin/dlltool"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/dlltool"
+      - "/usr/condabin/dlltool"
+      - "/home/mostafa/.local/bin/dlltool"
+      - "/home/mostafa/bin/dlltool"
+      - "/usr/lib64/ccache/dlltool"
+      - "/usr/local/bin/dlltool"
+      - "/var/lib/snapd/snap/bin/dlltool"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/dlltool"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/dlltool"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz"
+        - "/usr/bin"
+        - "/usr/condabin"
+        - "/home/mostafa/.local/bin"
+        - "/home/mostafa/bin"
+        - "/usr/lib64/ccache"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/snapd/snap/bin"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_ADDR2LINE"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "addr2line"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/usr/condabin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/bin/"
+      - "/usr/lib64/ccache/"
+      - "/usr/local/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+    found: "/usr/bin/addr2line"
+    search_context:
+      ENV{PATH}:
+        - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz"
+        - "/usr/bin"
+        - "/usr/condabin"
+        - "/home/mostafa/.local/bin"
+        - "/home/mostafa/bin"
+        - "/usr/lib64/ccache"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/snapd/snap/bin"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_TAPI"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "tapi"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/usr/condabin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/bin/"
+      - "/usr/lib64/ccache/"
+      - "/usr/local/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+    searched_directories:
+      - "/usr/bin/tapi"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/tapi"
+      - "/usr/condabin/tapi"
+      - "/home/mostafa/.local/bin/tapi"
+      - "/home/mostafa/bin/tapi"
+      - "/usr/lib64/ccache/tapi"
+      - "/usr/local/bin/tapi"
+      - "/var/lib/snapd/snap/bin/tapi"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/tapi"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/tapi"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz"
+        - "/usr/bin"
+        - "/usr/condabin"
+        - "/home/mostafa/.local/bin"
+        - "/home/mostafa/bin"
+        - "/usr/lib64/ccache"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/snapd/snap/bin"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER_AR"
+    description: "A wrapper around 'ar' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "gcc-ar-16.2"
+      - "gcc-ar-16"
+      - "gcc-ar16"
+      - "gcc-ar"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/usr/condabin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/bin/"
+      - "/usr/lib64/ccache/"
+      - "/usr/local/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+    searched_directories:
+      - "/usr/bin/gcc-ar-16.2"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/gcc-ar-16.2"
+      - "/usr/condabin/gcc-ar-16.2"
+      - "/home/mostafa/.local/bin/gcc-ar-16.2"
+      - "/home/mostafa/bin/gcc-ar-16.2"
+      - "/usr/lib64/ccache/gcc-ar-16.2"
+      - "/usr/local/bin/gcc-ar-16.2"
+      - "/var/lib/snapd/snap/bin/gcc-ar-16.2"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/gcc-ar-16.2"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/gcc-ar-16.2"
+      - "/usr/bin/gcc-ar-16"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/gcc-ar-16"
+      - "/usr/condabin/gcc-ar-16"
+      - "/home/mostafa/.local/bin/gcc-ar-16"
+      - "/home/mostafa/bin/gcc-ar-16"
+      - "/usr/lib64/ccache/gcc-ar-16"
+      - "/usr/local/bin/gcc-ar-16"
+      - "/var/lib/snapd/snap/bin/gcc-ar-16"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/gcc-ar-16"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/gcc-ar-16"
+      - "/usr/bin/gcc-ar16"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/gcc-ar16"
+      - "/usr/condabin/gcc-ar16"
+      - "/home/mostafa/.local/bin/gcc-ar16"
+      - "/home/mostafa/bin/gcc-ar16"
+      - "/usr/lib64/ccache/gcc-ar16"
+      - "/usr/local/bin/gcc-ar16"
+      - "/var/lib/snapd/snap/bin/gcc-ar16"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/gcc-ar16"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/gcc-ar16"
+    found: "/usr/bin/gcc-ar"
+    search_context:
+      ENV{PATH}:
+        - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz"
+        - "/usr/bin"
+        - "/usr/condabin"
+        - "/home/mostafa/.local/bin"
+        - "/home/mostafa/bin"
+        - "/usr/lib64/ccache"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/snapd/snap/bin"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER_RANLIB"
+    description: "A wrapper around 'ranlib' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "gcc-ranlib-16.2"
+      - "gcc-ranlib-16"
+      - "gcc-ranlib16"
+      - "gcc-ranlib"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/usr/condabin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/bin/"
+      - "/usr/lib64/ccache/"
+      - "/usr/local/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+    searched_directories:
+      - "/usr/bin/gcc-ranlib-16.2"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/gcc-ranlib-16.2"
+      - "/usr/condabin/gcc-ranlib-16.2"
+      - "/home/mostafa/.local/bin/gcc-ranlib-16.2"
+      - "/home/mostafa/bin/gcc-ranlib-16.2"
+      - "/usr/lib64/ccache/gcc-ranlib-16.2"
+      - "/usr/local/bin/gcc-ranlib-16.2"
+      - "/var/lib/snapd/snap/bin/gcc-ranlib-16.2"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/gcc-ranlib-16.2"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/gcc-ranlib-16.2"
+      - "/usr/bin/gcc-ranlib-16"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/gcc-ranlib-16"
+      - "/usr/condabin/gcc-ranlib-16"
+      - "/home/mostafa/.local/bin/gcc-ranlib-16"
+      - "/home/mostafa/bin/gcc-ranlib-16"
+      - "/usr/lib64/ccache/gcc-ranlib-16"
+      - "/usr/local/bin/gcc-ranlib-16"
+      - "/var/lib/snapd/snap/bin/gcc-ranlib-16"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/gcc-ranlib-16"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/gcc-ranlib-16"
+      - "/usr/bin/gcc-ranlib16"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/gcc-ranlib16"
+      - "/usr/condabin/gcc-ranlib16"
+      - "/home/mostafa/.local/bin/gcc-ranlib16"
+      - "/home/mostafa/bin/gcc-ranlib16"
+      - "/usr/lib64/ccache/gcc-ranlib16"
+      - "/usr/local/bin/gcc-ranlib16"
+      - "/var/lib/snapd/snap/bin/gcc-ranlib16"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/gcc-ranlib16"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/gcc-ranlib16"
+    found: "/usr/bin/gcc-ranlib"
+    search_context:
+      ENV{PATH}:
+        - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz"
+        - "/usr/bin"
+        - "/usr/condabin"
+        - "/home/mostafa/.local/bin"
+        - "/home/mostafa/bin"
+        - "/usr/lib64/ccache"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/snapd/snap/bin"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompiler.cmake:54 (find_program)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:69 (_cmake_find_compiler)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_CXX_COMPILER"
+    description: "CXX compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "c++"
+      - "CC"
+      - "g++"
+      - "aCC"
+      - "cl"
+      - "bcc"
+      - "xlC"
+      - "icpx"
+      - "icx"
+      - "clang++"
+    candidate_directories:
+      - "/usr/bin/"
+    found: "/usr/bin/c++"
+    search_context:
+      ENV{PATH}:
+        - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz"
+        - "/usr/bin"
+        - "/usr/condabin"
+        - "/home/mostafa/.local/bin"
+        - "/home/mostafa/bin"
+        - "/usr/lib64/ccache"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/snapd/snap/bin"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:468 (find_file)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:506 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCXXCompilerId.cpp.in"
+    candidate_directories:
+      - "/usr/share/cmake/Modules/"
+    found: "/usr/share/cmake/Modules/CMakeCXXCompilerId.cpp.in"
+    search_context:
+      ENV{PATH}:
+        - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz"
+        - "/usr/bin"
+        - "/usr/condabin"
+        - "/home/mostafa/.local/bin"
+        - "/home/mostafa/bin"
+        - "/usr/lib64/ccache"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/snapd/snap/bin"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: /usr/bin/c++ 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+      
+      The CXX compiler identification is GNU, found in:
+        /home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/4.3.0/CompilerIdCXX/a.out
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:207 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_CXX_COMPILER_AR"
+    description: "A wrapper around 'ar' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "gcc-ar-16.2"
+      - "gcc-ar-16"
+      - "gcc-ar16"
+      - "gcc-ar"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/usr/condabin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/bin/"
+      - "/usr/lib64/ccache/"
+      - "/usr/local/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+    searched_directories:
+      - "/usr/bin/gcc-ar-16.2"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/gcc-ar-16.2"
+      - "/usr/condabin/gcc-ar-16.2"
+      - "/home/mostafa/.local/bin/gcc-ar-16.2"
+      - "/home/mostafa/bin/gcc-ar-16.2"
+      - "/usr/lib64/ccache/gcc-ar-16.2"
+      - "/usr/local/bin/gcc-ar-16.2"
+      - "/var/lib/snapd/snap/bin/gcc-ar-16.2"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/gcc-ar-16.2"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/gcc-ar-16.2"
+      - "/usr/bin/gcc-ar-16"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/gcc-ar-16"
+      - "/usr/condabin/gcc-ar-16"
+      - "/home/mostafa/.local/bin/gcc-ar-16"
+      - "/home/mostafa/bin/gcc-ar-16"
+      - "/usr/lib64/ccache/gcc-ar-16"
+      - "/usr/local/bin/gcc-ar-16"
+      - "/var/lib/snapd/snap/bin/gcc-ar-16"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/gcc-ar-16"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/gcc-ar-16"
+      - "/usr/bin/gcc-ar16"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/gcc-ar16"
+      - "/usr/condabin/gcc-ar16"
+      - "/home/mostafa/.local/bin/gcc-ar16"
+      - "/home/mostafa/bin/gcc-ar16"
+      - "/usr/lib64/ccache/gcc-ar16"
+      - "/usr/local/bin/gcc-ar16"
+      - "/var/lib/snapd/snap/bin/gcc-ar16"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/gcc-ar16"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/gcc-ar16"
+    found: "/usr/bin/gcc-ar"
+    search_context:
+      ENV{PATH}:
+        - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz"
+        - "/usr/bin"
+        - "/usr/condabin"
+        - "/home/mostafa/.local/bin"
+        - "/home/mostafa/bin"
+        - "/usr/lib64/ccache"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/snapd/snap/bin"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:207 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_CXX_COMPILER_RANLIB"
+    description: "A wrapper around 'ranlib' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "gcc-ranlib-16.2"
+      - "gcc-ranlib-16"
+      - "gcc-ranlib16"
+      - "gcc-ranlib"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/usr/condabin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/bin/"
+      - "/usr/lib64/ccache/"
+      - "/usr/local/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+    searched_directories:
+      - "/usr/bin/gcc-ranlib-16.2"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/gcc-ranlib-16.2"
+      - "/usr/condabin/gcc-ranlib-16.2"
+      - "/home/mostafa/.local/bin/gcc-ranlib-16.2"
+      - "/home/mostafa/bin/gcc-ranlib-16.2"
+      - "/usr/lib64/ccache/gcc-ranlib-16.2"
+      - "/usr/local/bin/gcc-ranlib-16.2"
+      - "/var/lib/snapd/snap/bin/gcc-ranlib-16.2"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/gcc-ranlib-16.2"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/gcc-ranlib-16.2"
+      - "/usr/bin/gcc-ranlib-16"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/gcc-ranlib-16"
+      - "/usr/condabin/gcc-ranlib-16"
+      - "/home/mostafa/.local/bin/gcc-ranlib-16"
+      - "/home/mostafa/bin/gcc-ranlib-16"
+      - "/usr/lib64/ccache/gcc-ranlib-16"
+      - "/usr/local/bin/gcc-ranlib-16"
+      - "/var/lib/snapd/snap/bin/gcc-ranlib-16"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/gcc-ranlib-16"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/gcc-ranlib-16"
+      - "/usr/bin/gcc-ranlib16"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/gcc-ranlib16"
+      - "/usr/condabin/gcc-ranlib16"
+      - "/home/mostafa/.local/bin/gcc-ranlib16"
+      - "/home/mostafa/bin/gcc-ranlib16"
+      - "/usr/lib64/ccache/gcc-ranlib16"
+      - "/usr/local/bin/gcc-ranlib16"
+      - "/var/lib/snapd/snap/bin/gcc-ranlib16"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/gcc-ranlib16"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/gcc-ranlib16"
+    found: "/usr/bin/gcc-ranlib"
+    search_context:
+      ENV{PATH}:
+        - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz"
+        - "/usr/bin"
+        - "/usr/condabin"
+        - "/home/mostafa/.local/bin"
+        - "/home/mostafa/bin"
+        - "/usr/lib64/ccache"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/snapd/snap/bin"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "/usr/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/CMakeScratch/TryCompile-U4AdfZ"
+      binary: "/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/CMakeScratch/TryCompile-U4AdfZ"
+    cmakeVariables:
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/CMakeScratch/TryCompile-U4AdfZ'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_5cf4e/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_5cf4e.dir/build.make CMakeFiles/cmTC_5cf4e.dir/build
+        gmake[1]: Entering directory '/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/CMakeScratch/TryCompile-U4AdfZ'
+        Building C object CMakeFiles/cmTC_5cf4e.dir/CMakeCCompilerABI.c.o
+        /usr/bin/cc   -v -o CMakeFiles/cmTC_5cf4e.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/cc
+        OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
+        OFFLOAD_TARGET_DEFAULT=1
+        Target: x86_64-redhat-linux
+        Configured with: ../configure --enable-bootstrap --enable-languages=c,c++,fortran,objc,obj-c++,ada,go,d,m2,cobol,algol68,lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugzilla.redhat.com/ --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --enable-plugin --enable-initfini-array --enable-libstdcxx-backtrace --with-libstdcxx-zoneinfo=/usr/share/zoneinfo --with-isl=/builddir/build/BUILD/gcc-16.2.1-build/gcc-16.2.1-20261029/obj-x86_64-redhat-linux/isl-install --enable-gnu-indirect-function --enable-multilib --with-linker-hash-style=gnu --enable-offload-targets=nvptx-none,amdgcn-amdhsa --enable-offload-defaulted --without-cuda-driver --enable-cet --with-tune=generic --with-tls=gnu2 --with-arch_32=i686 --build=x86_64-redhat-linux --with-build-config=bootstrap-lto --enable-link-serialization=1 --disable-libssp
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 16.2.1 20261029 (Red Hat 16.2.1-3) (GCC) 
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_5cf4e.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-mtls-dialect=gnu2' '-dumpdir' 'CMakeFiles/cmTC_5cf4e.dir/'
+         /usr/libexec/gcc/x86_64-redhat-linux/16/cc1 -quiet -v /usr/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_5cf4e.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -mtls-dialect=gnu2 -version -o /tmp/ccATuOqW.s
+        GNU C23 (GCC) version 16.2.1 20261029 (Red Hat 16.2.1-3) (x86_64-redhat-linux)
+        	compiled by GNU C version 16.2.1 20261029 (Red Hat 16.2.1-3), GMP version 6.3.0, MPFR version 4.2.2, MPC version 1.4.1, isl version isl-0.24-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/16/include-fixed"
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/16/../../../../x86_64-redhat-linux/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /usr/lib/gcc/x86_64-redhat-linux/16/include
+         /usr/local/include
+         /usr/include
+        End of search list.
+        Compiler executable checksum: d1619b6ceeb2b9790dd96e4a0319d480
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_5cf4e.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-mtls-dialect=gnu2' '-dumpdir' 'CMakeFiles/cmTC_5cf4e.dir/'
+         as -v --64 -o CMakeFiles/cmTC_5cf4e.dir/CMakeCCompilerABI.c.o /tmp/ccATuOqW.s
+        GNU assembler version 2.46.1 (x86_64-redhat-linux) using BFD version version 2.46.1-1.fc44
+        COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/16/:/usr/libexec/gcc/x86_64-redhat-linux/16/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/16/:/usr/lib/gcc/x86_64-redhat-linux/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/16/:/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/16/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_5cf4e.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-mtls-dialect=gnu2' '-dumpdir' 'CMakeFiles/cmTC_5cf4e.dir/CMakeCCompilerABI.c.'
+        Linking C executable cmTC_5cf4e
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5cf4e.dir/link.txt --verbose=1
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/cc
+        COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/16/lto-wrapper
+        OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
+        OFFLOAD_TARGET_DEFAULT=1
+        Target: x86_64-redhat-linux
+        Configured with: ../configure --enable-bootstrap --enable-languages=c,c++,fortran,objc,obj-c++,ada,go,d,m2,cobol,algol68,lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugzilla.redhat.com/ --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --enable-plugin --enable-initfini-array --enable-libstdcxx-backtrace --with-libstdcxx-zoneinfo=/usr/share/zoneinfo --with-isl=/builddir/build/BUILD/gcc-16.2.1-build/gcc-16.2.1-20261029/obj-x86_64-redhat-linux/isl-install --enable-gnu-indirect-function --enable-multilib --with-linker-hash-style=gnu --enable-offload-targets=nvptx-none,amdgcn-amdhsa --enable-offload-defaulted --without-cuda-driver --enable-cet --with-tune=generic --with-tls=gnu2 --with-arch_32=i686 --build=x86_64-redhat-linux --with-build-config=bootstrap-lto --enable-link-serialization=1 --disable-libssp
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 16.2.1 20261029 (Red Hat 16.2.1-3) (GCC) 
+        COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/16/:/usr/libexec/gcc/x86_64-redhat-linux/16/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/16/:/usr/lib/gcc/x86_64-redhat-linux/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/16/:/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/16/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_5cf4e' '-mtune=generic' '-march=x86-64' '-mtls-dialect=gnu2' '-dumpdir' 'cmTC_5cf4e.'
+         /usr/libexec/gcc/x86_64-redhat-linux/16/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/16/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/16/lto-wrapper -plugin-opt=-fresolution=/tmp/ccf9yJXZ.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s_asneeded -plugin-opt=-pass-through=-latomic_asneeded -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s_asneeded --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_5cf4e /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/16/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/16 -L/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/16/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_5cf4e.dir/CMakeCCompilerABI.c.o -lgcc -lgcc_s_asneeded -latomic_asneeded -lc -lgcc -lgcc_s_asneeded /usr/lib/gcc/x86_64-redhat-linux/16/crtend.o /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crtn.o
+        collect2 version 16.2.1 20261029 (Red Hat 16.2.1-3)
+        /usr/bin/ld -plugin /usr/libexec/gcc/x86_64-redhat-linux/16/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/16/lto-wrapper -plugin-opt=-fresolution=/tmp/ccf9yJXZ.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s_asneeded -plugin-opt=-pass-through=-latomic_asneeded -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s_asneeded --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_5cf4e /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/16/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/16 -L/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/16/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_5cf4e.dir/CMakeCCompilerABI.c.o -lgcc -lgcc_s_asneeded -latomic_asneeded -lc -lgcc -lgcc_s_asneeded /usr/lib/gcc/x86_64-redhat-linux/16/crtend.o /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crtn.o
+        GNU ld version 2.46.1-1.fc44
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_5cf4e' '-mtune=generic' '-march=x86-64' '-mtls-dialect=gnu2' '-dumpdir' 'cmTC_5cf4e.'
+        /usr/bin/cc  -v -Wl,-v CMakeFiles/cmTC_5cf4e.dir/CMakeCCompilerABI.c.o -o cmTC_5cf4e
+        gmake[1]: Leaving directory '/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/CMakeScratch/TryCompile-U4AdfZ'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:217 (message)"
+      - "/usr/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/usr/lib/gcc/x86_64-redhat-linux/16/include]
+          add: [/usr/local/include]
+          add: [/usr/include]
+        end of search list found
+        collapse include dir [/usr/lib/gcc/x86_64-redhat-linux/16/include] ==> [/usr/lib/gcc/x86_64-redhat-linux/16/include]
+        collapse include dir [/usr/local/include] ==> [/usr/local/include]
+        collapse include dir [/usr/include] ==> [/usr/include]
+        implicit include dirs: [/usr/lib/gcc/x86_64-redhat-linux/16/include;/usr/local/include;/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
+      - "/usr/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
+        ignore line: [Change Dir: '/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/CMakeScratch/TryCompile-U4AdfZ']
+        ignore line: []
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_5cf4e/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_5cf4e.dir/build.make CMakeFiles/cmTC_5cf4e.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/CMakeScratch/TryCompile-U4AdfZ']
+        ignore line: [Building C object CMakeFiles/cmTC_5cf4e.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/usr/bin/cc   -v -o CMakeFiles/cmTC_5cf4e.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/cc]
+        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
+        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
+        ignore line: [Target: x86_64-redhat-linux]
+        ignore line: [Configured with: ../configure --enable-bootstrap --enable-languages=c c++ fortran objc obj-c++ ada go d m2 cobol algol68 lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugzilla.redhat.com/ --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --enable-plugin --enable-initfini-array --enable-libstdcxx-backtrace --with-libstdcxx-zoneinfo=/usr/share/zoneinfo --with-isl=/builddir/build/BUILD/gcc-16.2.1-build/gcc-16.2.1-20261029/obj-x86_64-redhat-linux/isl-install --enable-gnu-indirect-function --enable-multilib --with-linker-hash-style=gnu --enable-offload-targets=nvptx-none amdgcn-amdhsa --enable-offload-defaulted --without-cuda-driver --enable-cet --with-tune=generic --with-tls=gnu2 --with-arch_32=i686 --build=x86_64-redhat-linux --with-build-config=bootstrap-lto --enable-link-serialization=1 --disable-libssp]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 16.2.1 20261029 (Red Hat 16.2.1-3) (GCC) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_5cf4e.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-mtls-dialect=gnu2' '-dumpdir' 'CMakeFiles/cmTC_5cf4e.dir/']
+        ignore line: [ /usr/libexec/gcc/x86_64-redhat-linux/16/cc1 -quiet -v /usr/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_5cf4e.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -mtls-dialect=gnu2 -version -o /tmp/ccATuOqW.s]
+        ignore line: [GNU C23 (GCC) version 16.2.1 20261029 (Red Hat 16.2.1-3) (x86_64-redhat-linux)]
+        ignore line: [	compiled by GNU C version 16.2.1 20261029 (Red Hat 16.2.1-3)  GMP version 6.3.0  MPFR version 4.2.2  MPC version 1.4.1  isl version isl-0.24-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/16/include-fixed"]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/16/../../../../x86_64-redhat-linux/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /usr/lib/gcc/x86_64-redhat-linux/16/include]
+        ignore line: [ /usr/local/include]
+        ignore line: [ /usr/include]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: d1619b6ceeb2b9790dd96e4a0319d480]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_5cf4e.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-mtls-dialect=gnu2' '-dumpdir' 'CMakeFiles/cmTC_5cf4e.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_5cf4e.dir/CMakeCCompilerABI.c.o /tmp/ccATuOqW.s]
+        ignore line: [GNU assembler version 2.46.1 (x86_64-redhat-linux) using BFD version version 2.46.1-1.fc44]
+        ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/16/:/usr/libexec/gcc/x86_64-redhat-linux/16/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/16/:/usr/lib/gcc/x86_64-redhat-linux/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/16/:/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/16/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_5cf4e.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-mtls-dialect=gnu2' '-dumpdir' 'CMakeFiles/cmTC_5cf4e.dir/CMakeCCompilerABI.c.']
+        ignore line: [Linking C executable cmTC_5cf4e]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5cf4e.dir/link.txt --verbose=1]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/cc]
+        ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/16/lto-wrapper]
+        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
+        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
+        ignore line: [Target: x86_64-redhat-linux]
+        ignore line: [Configured with: ../configure --enable-bootstrap --enable-languages=c c++ fortran objc obj-c++ ada go d m2 cobol algol68 lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugzilla.redhat.com/ --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --enable-plugin --enable-initfini-array --enable-libstdcxx-backtrace --with-libstdcxx-zoneinfo=/usr/share/zoneinfo --with-isl=/builddir/build/BUILD/gcc-16.2.1-build/gcc-16.2.1-20261029/obj-x86_64-redhat-linux/isl-install --enable-gnu-indirect-function --enable-multilib --with-linker-hash-style=gnu --enable-offload-targets=nvptx-none amdgcn-amdhsa --enable-offload-defaulted --without-cuda-driver --enable-cet --with-tune=generic --with-tls=gnu2 --with-arch_32=i686 --build=x86_64-redhat-linux --with-build-config=bootstrap-lto --enable-link-serialization=1 --disable-libssp]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 16.2.1 20261029 (Red Hat 16.2.1-3) (GCC) ]
+        ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/16/:/usr/libexec/gcc/x86_64-redhat-linux/16/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/16/:/usr/lib/gcc/x86_64-redhat-linux/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/16/:/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/16/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_5cf4e' '-mtune=generic' '-march=x86-64' '-mtls-dialect=gnu2' '-dumpdir' 'cmTC_5cf4e.']
+        link line: [ /usr/libexec/gcc/x86_64-redhat-linux/16/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/16/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/16/lto-wrapper -plugin-opt=-fresolution=/tmp/ccf9yJXZ.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s_asneeded -plugin-opt=-pass-through=-latomic_asneeded -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s_asneeded --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_5cf4e /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/16/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/16 -L/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/16/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_5cf4e.dir/CMakeCCompilerABI.c.o -lgcc -lgcc_s_asneeded -latomic_asneeded -lc -lgcc -lgcc_s_asneeded /usr/lib/gcc/x86_64-redhat-linux/16/crtend.o /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crtn.o]
+          arg [/usr/libexec/gcc/x86_64-redhat-linux/16/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/usr/libexec/gcc/x86_64-redhat-linux/16/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/16/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccf9yJXZ.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s_asneeded] ==> ignore
+          arg [-plugin-opt=-pass-through=-latomic_asneeded] ==> ignore
+          arg [-plugin-opt=-pass-through=-lc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s_asneeded] ==> ignore
+          arg [--build-id] ==> ignore
+          arg [--no-add-needed] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [--hash-style=gnu] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_5cf4e] ==> ignore
+          arg [/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crt1.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crt1.o]
+          arg [/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crti.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crti.o]
+          arg [/usr/lib/gcc/x86_64-redhat-linux/16/crtbegin.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/16/crtbegin.o]
+          arg [-L/usr/lib/gcc/x86_64-redhat-linux/16] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/16]
+          arg [-L/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64]
+          arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
+          arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
+          arg [-L/usr/lib/gcc/x86_64-redhat-linux/16/../../..] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/16/../../..]
+          arg [-L/lib] ==> dir [/lib]
+          arg [-L/usr/lib] ==> dir [/usr/lib]
+          arg [-v] ==> ignore
+          arg [CMakeFiles/cmTC_5cf4e.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lgcc_s_asneeded] ==> lib [gcc_s_asneeded]
+          arg [-latomic_asneeded] ==> lib [atomic_asneeded]
+          arg [-lc] ==> lib [c]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lgcc_s_asneeded] ==> lib [gcc_s_asneeded]
+          arg [/usr/lib/gcc/x86_64-redhat-linux/16/crtend.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/16/crtend.o]
+          arg [/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crtn.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crtn.o]
+        ignore line: [collect2 version 16.2.1 20261029 (Red Hat 16.2.1-3)]
+        ignore line: [/usr/bin/ld -plugin /usr/libexec/gcc/x86_64-redhat-linux/16/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/16/lto-wrapper -plugin-opt=-fresolution=/tmp/ccf9yJXZ.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s_asneeded -plugin-opt=-pass-through=-latomic_asneeded -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s_asneeded --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_5cf4e /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/16/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/16 -L/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/16/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_5cf4e.dir/CMakeCCompilerABI.c.o -lgcc -lgcc_s_asneeded -latomic_asneeded -lc -lgcc -lgcc_s_asneeded /usr/lib/gcc/x86_64-redhat-linux/16/crtend.o /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crtn.o]
+        linker tool for 'C': /usr/bin/ld
+        collapse obj [/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crt1.o] ==> [/usr/lib64/crt1.o]
+        collapse obj [/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crti.o] ==> [/usr/lib64/crti.o]
+        collapse obj [/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crtn.o] ==> [/usr/lib64/crtn.o]
+        collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/16] ==> [/usr/lib/gcc/x86_64-redhat-linux/16]
+        collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64] ==> [/usr/lib64]
+        collapse library dir [/lib/../lib64] ==> [/lib64]
+        collapse library dir [/usr/lib/../lib64] ==> [/usr/lib64]
+        collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/16/../../..] ==> [/usr/lib]
+        collapse library dir [/lib] ==> [/lib]
+        collapse library dir [/usr/lib] ==> [/usr/lib]
+        implicit libs: [gcc;gcc_s_asneeded;atomic_asneeded;c;gcc;gcc_s_asneeded]
+        implicit objs: [/usr/lib64/crt1.o;/usr/lib64/crti.o;/usr/lib/gcc/x86_64-redhat-linux/16/crtbegin.o;/usr/lib/gcc/x86_64-redhat-linux/16/crtend.o;/usr/lib64/crtn.o]
+        implicit dirs: [/usr/lib/gcc/x86_64-redhat-linux/16;/usr/lib64;/lib64;/usr/lib;/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CMakeDetermineLinkerId.cmake:38 (message)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:299 (cmake_determine_linker_id)"
+      - "/usr/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Running the C compiler's linker: "/usr/bin/ld" "-v"
+      GNU ld version 2.46.1-1.fc44
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "/usr/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/CMakeScratch/TryCompile-IUFuPA"
+      binary: "/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/CMakeScratch/TryCompile-IUFuPA"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/CMakeScratch/TryCompile-IUFuPA'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_c3005/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_c3005.dir/build.make CMakeFiles/cmTC_c3005.dir/build
+        gmake[1]: Entering directory '/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/CMakeScratch/TryCompile-IUFuPA'
+        Building CXX object CMakeFiles/cmTC_c3005.dir/CMakeCXXCompilerABI.cpp.o
+        /usr/bin/c++   -v -o CMakeFiles/cmTC_c3005.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/c++
+        OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
+        OFFLOAD_TARGET_DEFAULT=1
+        Target: x86_64-redhat-linux
+        Configured with: ../configure --enable-bootstrap --enable-languages=c,c++,fortran,objc,obj-c++,ada,go,d,m2,cobol,algol68,lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugzilla.redhat.com/ --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --enable-plugin --enable-initfini-array --enable-libstdcxx-backtrace --with-libstdcxx-zoneinfo=/usr/share/zoneinfo --with-isl=/builddir/build/BUILD/gcc-16.2.1-build/gcc-16.2.1-20261029/obj-x86_64-redhat-linux/isl-install --enable-gnu-indirect-function --enable-multilib --with-linker-hash-style=gnu --enable-offload-targets=nvptx-none,amdgcn-amdhsa --enable-offload-defaulted --without-cuda-driver --enable-cet --with-tune=generic --with-tls=gnu2 --with-arch_32=i686 --build=x86_64-redhat-linux --with-build-config=bootstrap-lto --enable-link-serialization=1 --disable-libssp
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 16.2.1 20261029 (Red Hat 16.2.1-3) (GCC) 
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c3005.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-mtls-dialect=gnu2' '-dumpdir' 'CMakeFiles/cmTC_c3005.dir/'
+         /usr/libexec/gcc/x86_64-redhat-linux/16/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_c3005.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -mtls-dialect=gnu2 -version -o /tmp/cc1LFQBY.s
+        GNU C++20 (GCC) version 16.2.1 20261029 (Red Hat 16.2.1-3) (x86_64-redhat-linux)
+        	compiled by GNU C version 16.2.1 20261029 (Red Hat 16.2.1-3), GMP version 6.3.0, MPFR version 4.2.2, MPC version 1.4.1, isl version isl-0.24-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/16/include-fixed"
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/16/../../../../x86_64-redhat-linux/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /usr/lib/gcc/x86_64-redhat-linux/16/../../../../include/c++/16
+         /usr/lib/gcc/x86_64-redhat-linux/16/../../../../include/c++/16/x86_64-redhat-linux
+         /usr/lib/gcc/x86_64-redhat-linux/16/../../../../include/c++/16/backward
+         /usr/lib/gcc/x86_64-redhat-linux/16/include
+         /usr/local/include
+         /usr/include
+        End of search list.
+        Compiler executable checksum: 6f0956bc1784865f31edfe643b14efab
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c3005.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-mtls-dialect=gnu2' '-dumpdir' 'CMakeFiles/cmTC_c3005.dir/'
+         as -v --64 -o CMakeFiles/cmTC_c3005.dir/CMakeCXXCompilerABI.cpp.o /tmp/cc1LFQBY.s
+        GNU assembler version 2.46.1 (x86_64-redhat-linux) using BFD version version 2.46.1-1.fc44
+        COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/16/:/usr/libexec/gcc/x86_64-redhat-linux/16/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/16/:/usr/lib/gcc/x86_64-redhat-linux/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/16/:/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/16/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c3005.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-mtls-dialect=gnu2' '-dumpdir' 'CMakeFiles/cmTC_c3005.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_c3005
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c3005.dir/link.txt --verbose=1
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/c++
+        COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/16/lto-wrapper
+        OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
+        OFFLOAD_TARGET_DEFAULT=1
+        Target: x86_64-redhat-linux
+        Configured with: ../configure --enable-bootstrap --enable-languages=c,c++,fortran,objc,obj-c++,ada,go,d,m2,cobol,algol68,lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugzilla.redhat.com/ --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --enable-plugin --enable-initfini-array --enable-libstdcxx-backtrace --with-libstdcxx-zoneinfo=/usr/share/zoneinfo --with-isl=/builddir/build/BUILD/gcc-16.2.1-build/gcc-16.2.1-20261029/obj-x86_64-redhat-linux/isl-install --enable-gnu-indirect-function --enable-multilib --with-linker-hash-style=gnu --enable-offload-targets=nvptx-none,amdgcn-amdhsa --enable-offload-defaulted --without-cuda-driver --enable-cet --with-tune=generic --with-tls=gnu2 --with-arch_32=i686 --build=x86_64-redhat-linux --with-build-config=bootstrap-lto --enable-link-serialization=1 --disable-libssp
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 16.2.1 20261029 (Red Hat 16.2.1-3) (GCC) 
+        COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/16/:/usr/libexec/gcc/x86_64-redhat-linux/16/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/16/:/usr/lib/gcc/x86_64-redhat-linux/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/16/:/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/16/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_c3005' '-foffload-options=-l_GCC_stdc++' '-foffload-options=-l_GCC_m' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-mtls-dialect=gnu2' '-dumpdir' 'cmTC_c3005.'
+         /usr/libexec/gcc/x86_64-redhat-linux/16/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/16/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/16/lto-wrapper -plugin-opt=-fresolution=/tmp/cc6olpCn.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-latomic_asneeded -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_c3005 /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/16/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/16 -L/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/16/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_c3005.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -latomic_asneeded -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/16/crtend.o /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crtn.o
+        collect2 version 16.2.1 20261029 (Red Hat 16.2.1-3)
+        /usr/bin/ld -plugin /usr/libexec/gcc/x86_64-redhat-linux/16/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/16/lto-wrapper -plugin-opt=-fresolution=/tmp/cc6olpCn.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-latomic_asneeded -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_c3005 /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/16/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/16 -L/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/16/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_c3005.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -latomic_asneeded -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/16/crtend.o /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crtn.o
+        GNU ld version 2.46.1-1.fc44
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_c3005' '-foffload-options=-l_GCC_stdc++' '-foffload-options=-l_GCC_m' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-mtls-dialect=gnu2' '-dumpdir' 'cmTC_c3005.'
+        /usr/bin/c++  -v -Wl,-v CMakeFiles/cmTC_c3005.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_c3005
+        gmake[1]: Leaving directory '/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/CMakeScratch/TryCompile-IUFuPA'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:217 (message)"
+      - "/usr/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/usr/lib/gcc/x86_64-redhat-linux/16/../../../../include/c++/16]
+          add: [/usr/lib/gcc/x86_64-redhat-linux/16/../../../../include/c++/16/x86_64-redhat-linux]
+          add: [/usr/lib/gcc/x86_64-redhat-linux/16/../../../../include/c++/16/backward]
+          add: [/usr/lib/gcc/x86_64-redhat-linux/16/include]
+          add: [/usr/local/include]
+          add: [/usr/include]
+        end of search list found
+        collapse include dir [/usr/lib/gcc/x86_64-redhat-linux/16/../../../../include/c++/16] ==> [/usr/include/c++/16]
+        collapse include dir [/usr/lib/gcc/x86_64-redhat-linux/16/../../../../include/c++/16/x86_64-redhat-linux] ==> [/usr/include/c++/16/x86_64-redhat-linux]
+        collapse include dir [/usr/lib/gcc/x86_64-redhat-linux/16/../../../../include/c++/16/backward] ==> [/usr/include/c++/16/backward]
+        collapse include dir [/usr/lib/gcc/x86_64-redhat-linux/16/include] ==> [/usr/lib/gcc/x86_64-redhat-linux/16/include]
+        collapse include dir [/usr/local/include] ==> [/usr/local/include]
+        collapse include dir [/usr/include] ==> [/usr/include]
+        implicit include dirs: [/usr/include/c++/16;/usr/include/c++/16/x86_64-redhat-linux;/usr/include/c++/16/backward;/usr/lib/gcc/x86_64-redhat-linux/16/include;/usr/local/include;/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
+      - "/usr/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
+        ignore line: [Change Dir: '/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/CMakeScratch/TryCompile-IUFuPA']
+        ignore line: []
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_c3005/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_c3005.dir/build.make CMakeFiles/cmTC_c3005.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/CMakeScratch/TryCompile-IUFuPA']
+        ignore line: [Building CXX object CMakeFiles/cmTC_c3005.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_c3005.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/c++]
+        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
+        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
+        ignore line: [Target: x86_64-redhat-linux]
+        ignore line: [Configured with: ../configure --enable-bootstrap --enable-languages=c c++ fortran objc obj-c++ ada go d m2 cobol algol68 lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugzilla.redhat.com/ --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --enable-plugin --enable-initfini-array --enable-libstdcxx-backtrace --with-libstdcxx-zoneinfo=/usr/share/zoneinfo --with-isl=/builddir/build/BUILD/gcc-16.2.1-build/gcc-16.2.1-20261029/obj-x86_64-redhat-linux/isl-install --enable-gnu-indirect-function --enable-multilib --with-linker-hash-style=gnu --enable-offload-targets=nvptx-none amdgcn-amdhsa --enable-offload-defaulted --without-cuda-driver --enable-cet --with-tune=generic --with-tls=gnu2 --with-arch_32=i686 --build=x86_64-redhat-linux --with-build-config=bootstrap-lto --enable-link-serialization=1 --disable-libssp]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 16.2.1 20261029 (Red Hat 16.2.1-3) (GCC) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c3005.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-mtls-dialect=gnu2' '-dumpdir' 'CMakeFiles/cmTC_c3005.dir/']
+        ignore line: [ /usr/libexec/gcc/x86_64-redhat-linux/16/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_c3005.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -mtls-dialect=gnu2 -version -o /tmp/cc1LFQBY.s]
+        ignore line: [GNU C++20 (GCC) version 16.2.1 20261029 (Red Hat 16.2.1-3) (x86_64-redhat-linux)]
+        ignore line: [	compiled by GNU C version 16.2.1 20261029 (Red Hat 16.2.1-3)  GMP version 6.3.0  MPFR version 4.2.2  MPC version 1.4.1  isl version isl-0.24-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/16/include-fixed"]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/16/../../../../x86_64-redhat-linux/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /usr/lib/gcc/x86_64-redhat-linux/16/../../../../include/c++/16]
+        ignore line: [ /usr/lib/gcc/x86_64-redhat-linux/16/../../../../include/c++/16/x86_64-redhat-linux]
+        ignore line: [ /usr/lib/gcc/x86_64-redhat-linux/16/../../../../include/c++/16/backward]
+        ignore line: [ /usr/lib/gcc/x86_64-redhat-linux/16/include]
+        ignore line: [ /usr/local/include]
+        ignore line: [ /usr/include]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: 6f0956bc1784865f31edfe643b14efab]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c3005.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-mtls-dialect=gnu2' '-dumpdir' 'CMakeFiles/cmTC_c3005.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_c3005.dir/CMakeCXXCompilerABI.cpp.o /tmp/cc1LFQBY.s]
+        ignore line: [GNU assembler version 2.46.1 (x86_64-redhat-linux) using BFD version version 2.46.1-1.fc44]
+        ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/16/:/usr/libexec/gcc/x86_64-redhat-linux/16/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/16/:/usr/lib/gcc/x86_64-redhat-linux/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/16/:/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/16/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c3005.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-mtls-dialect=gnu2' '-dumpdir' 'CMakeFiles/cmTC_c3005.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX executable cmTC_c3005]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c3005.dir/link.txt --verbose=1]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/c++]
+        ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/16/lto-wrapper]
+        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
+        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
+        ignore line: [Target: x86_64-redhat-linux]
+        ignore line: [Configured with: ../configure --enable-bootstrap --enable-languages=c c++ fortran objc obj-c++ ada go d m2 cobol algol68 lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugzilla.redhat.com/ --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --enable-plugin --enable-initfini-array --enable-libstdcxx-backtrace --with-libstdcxx-zoneinfo=/usr/share/zoneinfo --with-isl=/builddir/build/BUILD/gcc-16.2.1-build/gcc-16.2.1-20261029/obj-x86_64-redhat-linux/isl-install --enable-gnu-indirect-function --enable-multilib --with-linker-hash-style=gnu --enable-offload-targets=nvptx-none amdgcn-amdhsa --enable-offload-defaulted --without-cuda-driver --enable-cet --with-tune=generic --with-tls=gnu2 --with-arch_32=i686 --build=x86_64-redhat-linux --with-build-config=bootstrap-lto --enable-link-serialization=1 --disable-libssp]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 16.2.1 20261029 (Red Hat 16.2.1-3) (GCC) ]
+        ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/16/:/usr/libexec/gcc/x86_64-redhat-linux/16/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/16/:/usr/lib/gcc/x86_64-redhat-linux/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/16/:/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/16/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_c3005' '-foffload-options=-l_GCC_stdc++' '-foffload-options=-l_GCC_m' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-mtls-dialect=gnu2' '-dumpdir' 'cmTC_c3005.']
+        link line: [ /usr/libexec/gcc/x86_64-redhat-linux/16/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/16/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/16/lto-wrapper -plugin-opt=-fresolution=/tmp/cc6olpCn.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-latomic_asneeded -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_c3005 /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/16/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/16 -L/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/16/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_c3005.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -latomic_asneeded -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/16/crtend.o /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crtn.o]
+          arg [/usr/libexec/gcc/x86_64-redhat-linux/16/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/usr/libexec/gcc/x86_64-redhat-linux/16/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/16/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/cc6olpCn.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-latomic_asneeded] ==> ignore
+          arg [-plugin-opt=-pass-through=-lc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [--build-id] ==> ignore
+          arg [--no-add-needed] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [--hash-style=gnu] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_c3005] ==> ignore
+          arg [/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crt1.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crt1.o]
+          arg [/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crti.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crti.o]
+          arg [/usr/lib/gcc/x86_64-redhat-linux/16/crtbegin.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/16/crtbegin.o]
+          arg [-L/usr/lib/gcc/x86_64-redhat-linux/16] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/16]
+          arg [-L/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64]
+          arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
+          arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
+          arg [-L/usr/lib/gcc/x86_64-redhat-linux/16/../../..] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/16/../../..]
+          arg [-L/lib] ==> dir [/lib]
+          arg [-L/usr/lib] ==> dir [/usr/lib]
+          arg [-v] ==> ignore
+          arg [CMakeFiles/cmTC_c3005.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [-lstdc++] ==> lib [stdc++]
+          arg [-lm] ==> lib [m]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-latomic_asneeded] ==> lib [atomic_asneeded]
+          arg [-lc] ==> lib [c]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [/usr/lib/gcc/x86_64-redhat-linux/16/crtend.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/16/crtend.o]
+          arg [/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crtn.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crtn.o]
+        ignore line: [collect2 version 16.2.1 20261029 (Red Hat 16.2.1-3)]
+        ignore line: [/usr/bin/ld -plugin /usr/libexec/gcc/x86_64-redhat-linux/16/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/16/lto-wrapper -plugin-opt=-fresolution=/tmp/cc6olpCn.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-latomic_asneeded -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_c3005 /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/16/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/16 -L/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/16/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_c3005.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -latomic_asneeded -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/16/crtend.o /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crtn.o]
+        linker tool for 'CXX': /usr/bin/ld
+        collapse obj [/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crt1.o] ==> [/usr/lib64/crt1.o]
+        collapse obj [/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crti.o] ==> [/usr/lib64/crti.o]
+        collapse obj [/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crtn.o] ==> [/usr/lib64/crtn.o]
+        collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/16] ==> [/usr/lib/gcc/x86_64-redhat-linux/16]
+        collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64] ==> [/usr/lib64]
+        collapse library dir [/lib/../lib64] ==> [/lib64]
+        collapse library dir [/usr/lib/../lib64] ==> [/usr/lib64]
+        collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/16/../../..] ==> [/usr/lib]
+        collapse library dir [/lib] ==> [/lib]
+        collapse library dir [/usr/lib] ==> [/usr/lib]
+        implicit libs: [stdc++;m;gcc_s;gcc;atomic_asneeded;c;gcc_s;gcc]
+        implicit objs: [/usr/lib64/crt1.o;/usr/lib64/crti.o;/usr/lib/gcc/x86_64-redhat-linux/16/crtbegin.o;/usr/lib/gcc/x86_64-redhat-linux/16/crtend.o;/usr/lib64/crtn.o]
+        implicit dirs: [/usr/lib/gcc/x86_64-redhat-linux/16;/usr/lib64;/lib64;/usr/lib;/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CMakeDetermineLinkerId.cmake:38 (message)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:299 (cmake_determine_linker_id)"
+      - "/usr/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Running the CXX compiler's linker: "/usr/bin/ld" "-v"
+      GNU ld version 2.46.1-1.fc44
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/FindZLIB.cmake:165 (find_path)"
+      - "/home/mostafa/dof-from-bag-player/packages/protobuf/build/cmake/protobuf/protobuf-config.cmake:6 (find_package)"
+      - "CMakeLists.txt:98 (find_package)"
+    mode: "path"
+    variable: "ZLIB_INCLUDE_DIR"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "zlib.h"
+    candidate_directories:
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/include/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/usr/bin/include/"
+      - "/usr/bin/"
+      - "/usr/condabin/include/"
+      - "/usr/condabin/"
+      - "/home/mostafa/.local/bin/include/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/bin/include/"
+      - "/home/mostafa/bin/"
+      - "/usr/lib64/ccache/include/"
+      - "/usr/lib64/ccache/"
+      - "/usr/local/bin/include/"
+      - "/usr/local/bin/"
+      - "/var/lib/snapd/snap/bin/include/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/include/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/include/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+      - "/usr/local/include/include/"
+      - "/usr/local/include/"
+      - "/usr/local/include/"
+      - "/usr/local/"
+      - "/usr/include/include/"
+      - "/usr/include/"
+      - "/usr/include/"
+      - "/usr/"
+      - "/include/include/"
+      - "/include/"
+      - "/usr/X11R6/include/include/"
+      - "/usr/X11R6/include/"
+      - "/usr/X11R6/include/"
+      - "/usr/X11R6/"
+      - "/usr/pkg/include/include/"
+      - "/usr/pkg/include/"
+      - "/usr/pkg/include/"
+      - "/usr/pkg/"
+      - "/opt/include/include/"
+      - "/opt/include/"
+      - "/opt/include/"
+      - "/opt/"
+      - "/usr/include/X11/include/"
+      - "/usr/include/X11/"
+      - "/zlib/include/"
+      - "/zlib/"
+    searched_directories:
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/include/zlib.h"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/zlib.h"
+      - "/usr/bin/include/zlib.h"
+      - "/usr/bin/zlib.h"
+      - "/usr/condabin/include/zlib.h"
+      - "/usr/condabin/zlib.h"
+      - "/home/mostafa/.local/bin/include/zlib.h"
+      - "/home/mostafa/.local/bin/zlib.h"
+      - "/home/mostafa/bin/include/zlib.h"
+      - "/home/mostafa/bin/zlib.h"
+      - "/usr/lib64/ccache/include/zlib.h"
+      - "/usr/lib64/ccache/zlib.h"
+      - "/usr/local/bin/include/zlib.h"
+      - "/usr/local/bin/zlib.h"
+      - "/var/lib/snapd/snap/bin/include/zlib.h"
+      - "/var/lib/snapd/snap/bin/zlib.h"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/include/zlib.h"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/zlib.h"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/include/zlib.h"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/zlib.h"
+      - "/usr/local/include/include/zlib.h"
+      - "/usr/local/include/zlib.h"
+      - "/usr/local/include/zlib.h"
+      - "/usr/local/zlib.h"
+      - "/usr/include/include/zlib.h"
+    found: "/usr/include/"
+    search_context:
+      ENV{PATH}:
+        - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz"
+        - "/usr/bin"
+        - "/usr/condabin"
+        - "/home/mostafa/.local/bin"
+        - "/home/mostafa/bin"
+        - "/usr/lib64/ccache"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/snapd/snap/bin"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/usr"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+      CMAKE_SYSTEM_INCLUDE_PATH:
+        - "/usr/include/X11"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/FindZLIB.cmake:195 (find_library)"
+      - "/home/mostafa/dof-from-bag-player/packages/protobuf/build/cmake/protobuf/protobuf-config.cmake:6 (find_package)"
+      - "CMakeLists.txt:98 (find_package)"
+    mode: "library"
+    variable: "ZLIB_LIBRARY_RELEASE"
+    description: "Path to a library."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "z"
+      - "zlib"
+      - "zdll"
+      - "zlib1"
+      - "zlibstatic"
+      - "zlibwapi"
+      - "zlibvc"
+      - "zlibstat"
+    candidate_directories:
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/usr/bin/"
+      - "/usr/condabin/"
+      - "/home/mostafa/.local/bin/"
+      - "/usr/lib64/ccache/"
+      - "/usr/local/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib/"
+      - "/usr/local/"
+      - "/usr/lib64/"
+      - "/usr/lib/"
+      - "/usr/lib64/"
+      - "/usr/lib/"
+      - "/usr/"
+      - "/lib64/"
+      - "/lib/"
+      - "/opt/"
+      - "/usr/lib64/X11/"
+    searched_directories:
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/usr/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/"
+      - "/usr/condabin/"
+      - "/usr/condabin/"
+      - "/usr/condabin/"
+      - "/usr/condabin/"
+      - "/usr/condabin/"
+      - "/usr/condabin/"
+      - "/usr/condabin/"
+      - "/usr/condabin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/.local/bin/"
+      - "/usr/lib64/ccache/"
+      - "/usr/lib64/ccache/"
+      - "/usr/lib64/ccache/"
+      - "/usr/lib64/ccache/"
+      - "/usr/lib64/ccache/"
+      - "/usr/lib64/ccache/"
+      - "/usr/lib64/ccache/"
+      - "/usr/lib64/ccache/"
+      - "/usr/local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/local/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/"
+      - "/usr/local/"
+      - "/usr/local/"
+      - "/usr/local/"
+      - "/usr/local/"
+      - "/usr/local/"
+      - "/usr/local/"
+      - "/usr/local/"
+    found: "/usr/lib64/libz.so"
+    search_context:
+      ENV{PATH}:
+        - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz"
+        - "/usr/bin"
+        - "/usr/condabin"
+        - "/home/mostafa/.local/bin"
+        - "/home/mostafa/bin"
+        - "/usr/lib64/ccache"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/snapd/snap/bin"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/usr"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+      CMAKE_SYSTEM_LIBRARY_PATH:
+        - "/usr/lib/X11"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/FindZLIB.cmake:196 (find_library)"
+      - "/home/mostafa/dof-from-bag-player/packages/protobuf/build/cmake/protobuf/protobuf-config.cmake:6 (find_package)"
+      - "CMakeLists.txt:98 (find_package)"
+    mode: "library"
+    variable: "ZLIB_LIBRARY_DEBUG"
+    description: "Path to a library."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "zd"
+      - "zlibd"
+      - "zdlld"
+      - "zlibd1"
+      - "zlib1d"
+      - "zlibstaticd"
+      - "zlibwapid"
+      - "zlibvcd"
+      - "zlibstatd"
+    candidate_directories:
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/usr/bin/"
+      - "/usr/condabin/"
+      - "/home/mostafa/.local/bin/"
+      - "/usr/lib64/ccache/"
+      - "/usr/local/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib/"
+      - "/usr/local/"
+      - "/usr/lib64/"
+      - "/usr/lib/"
+      - "/usr/lib64/"
+      - "/usr/lib/"
+      - "/usr/"
+      - "/lib64/"
+      - "/lib/"
+      - "/opt/"
+      - "/usr/lib64/X11/"
+    searched_directories:
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/"
+      - "/usr/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/"
+      - "/usr/bin/"
+      - "/usr/condabin/"
+      - "/usr/condabin/"
+      - "/usr/condabin/"
+      - "/usr/condabin/"
+      - "/usr/condabin/"
+      - "/usr/condabin/"
+      - "/usr/condabin/"
+      - "/usr/condabin/"
+      - "/usr/condabin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/.local/bin/"
+      - "/home/mostafa/.local/bin/"
+      - "/usr/lib64/ccache/"
+      - "/usr/lib64/ccache/"
+      - "/usr/lib64/ccache/"
+      - "/usr/lib64/ccache/"
+      - "/usr/lib64/ccache/"
+      - "/usr/lib64/ccache/"
+      - "/usr/lib64/ccache/"
+      - "/usr/lib64/ccache/"
+      - "/usr/lib64/ccache/"
+      - "/usr/local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/local/bin/"
+      - "/usr/local/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/var/lib/snapd/snap/bin/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+      - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib64/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/"
+      - "/usr/local/"
+      - "/usr/local/"
+      - "/usr/local/"
+      - "/usr/local/"
+      - "/usr/local/"
+      - "/usr/local/"
+      - "/usr/local/"
+      - "/usr/local/"
+      - "/usr/lib64/"
+      - "/usr/lib64/"
+      - "/usr/lib64/"
+      - "/usr/lib64/"
+      - "/usr/lib64/"
+      - "/usr/lib64/"
+      - "/usr/lib64/"
+      - "/usr/lib64/"
+      - "/usr/lib64/"
+      - "/usr/lib/"
+      - "/usr/lib/"
+      - "/usr/lib/"
+      - "/usr/lib/"
+      - "/usr/lib/"
+      - "/usr/lib/"
+      - "/usr/lib/"
+      - "/usr/lib/"
+      - "/usr/lib/"
+      - "/usr/lib64/"
+      - "/usr/lib64/"
+      - "/usr/lib64/"
+      - "/usr/lib64/"
+      - "/usr/lib64/"
+      - "/usr/lib64/"
+      - "/usr/lib64/"
+      - "/usr/lib64/"
+      - "/usr/lib64/"
+      - "/usr/lib/"
+      - "/usr/lib/"
+      - "/usr/lib/"
+      - "/usr/lib/"
+      - "/usr/lib/"
+      - "/usr/lib/"
+      - "/usr/lib/"
+      - "/usr/lib/"
+      - "/usr/lib/"
+      - "/usr/"
+      - "/usr/"
+      - "/usr/"
+      - "/usr/"
+      - "/usr/"
+      - "/usr/"
+      - "/usr/"
+      - "/usr/"
+      - "/usr/"
+      - "/lib64/"
+      - "/lib64/"
+      - "/lib64/"
+      - "/lib64/"
+      - "/lib64/"
+      - "/lib64/"
+      - "/lib64/"
+      - "/lib64/"
+      - "/lib64/"
+      - "/lib/"
+      - "/lib/"
+      - "/lib/"
+      - "/lib/"
+      - "/lib/"
+      - "/lib/"
+      - "/lib/"
+      - "/lib/"
+      - "/lib/"
+      - "/opt/"
+      - "/opt/"
+      - "/opt/"
+      - "/opt/"
+      - "/opt/"
+      - "/opt/"
+      - "/opt/"
+      - "/opt/"
+      - "/opt/"
+      - "/usr/lib64/X11/"
+      - "/usr/lib64/X11/"
+      - "/usr/lib64/X11/"
+      - "/usr/lib64/X11/"
+      - "/usr/lib64/X11/"
+      - "/usr/lib64/X11/"
+      - "/usr/lib64/X11/"
+      - "/usr/lib64/X11/"
+      - "/usr/lib64/X11/"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz"
+        - "/usr/bin"
+        - "/usr/condabin"
+        - "/home/mostafa/.local/bin"
+        - "/home/mostafa/bin"
+        - "/usr/lib64/ccache"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/snapd/snap/bin"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/usr"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+      CMAKE_SYSTEM_LIBRARY_PATH:
+        - "/usr/lib/X11"
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:104 (try_compile)"
+      - "/usr/share/cmake/Modules/CheckCSourceCompiles.cmake:103 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/FindThreads.cmake:160 (check_c_source_compiles)"
+      - "/usr/share/cmake/Modules/FindThreads.cmake:226 (_threads_check_libc)"
+      - "/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake:93 (find_package)"
+      - "/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake:125 (__find_dependency_common)"
+      - "/usr/local/lib64/cmake/absl/abslConfig.cmake:4 (find_dependency)"
+      - "/home/mostafa/dof-from-bag-player/packages/protobuf/build/cmake/protobuf/protobuf-config.cmake:9 (find_package)"
+      - "CMakeLists.txt:98 (find_package)"
+    checks:
+      - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
+    directories:
+      source: "/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/CMakeScratch/TryCompile-NMuCrf"
+      binary: "/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/CMakeScratch/TryCompile-NMuCrf"
+    cmakeVariables:
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_HAVE_LIBC_PTHREAD"
+      cached: true
+      stdout: |
+        Change Dir: '/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/CMakeScratch/TryCompile-NMuCrf'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_e59cd/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_e59cd.dir/build.make CMakeFiles/cmTC_e59cd.dir/build
+        gmake[1]: Entering directory '/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/CMakeScratch/TryCompile-NMuCrf'
+        Building C object CMakeFiles/cmTC_e59cd.dir/src.c.o
+        /usr/bin/cc -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_e59cd.dir/src.c.o -c /home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/CMakeScratch/TryCompile-NMuCrf/src.c
+        Linking C executable cmTC_e59cd
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e59cd.dir/link.txt --verbose=1
+        /usr/bin/cc CMakeFiles/cmTC_e59cd.dir/src.c.o -o cmTC_e59cd
+        gmake[1]: Leaving directory '/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/CMakeScratch/TryCompile-NMuCrf'
+        
+      exitCode: 0
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "/home/mostafa/dof-from-bag-player/packages/protobuf/build/cmake/protobuf/protobuf-config.cmake:9 (find_package)"
+      - "CMakeLists.txt:98 (find_package)"
+    name: "absl"
+    configs:
+      -
+        filename: "absl.cps"
+        kind: "cps"
+      -
+        filename: "abslConfig.cmake"
+        kind: "cmake"
+      -
+        filename: "absl-config.cmake"
+        kind: "cmake"
+    version_request:
+      exact: false
+    settings:
+      required: "optional"
+      quiet: false
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      names:
+        - "absl"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/pkgRedirects/abslConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/pkgRedirects/absl-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/pkgRedirects/lib64/cps/absl.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/pkgRedirects/lib/cps/absl.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/pkgRedirects/share/cps/absl.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/abslConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/absl-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/lib64/cps/absl.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/lib/cps/absl.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/share/cps/absl.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/abslConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/absl-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib64/cps/absl.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cps/absl.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/share/cps/absl.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/condabin/abslConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/condabin/absl-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/condabin/lib64/cps/absl.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/condabin/lib/cps/absl.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/condabin/share/cps/absl.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/.local/abslConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/.local/absl-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/.local/lib64/cps/absl.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/.local/lib/cps/absl.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/.local/share/cps/absl.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/abslConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/absl-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/lib64/cps/absl.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/lib/cps/absl.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/share/cps/absl.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/lib64/ccache/abslConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib64/ccache/absl-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib64/ccache/lib64/cps/absl.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/lib64/ccache/lib/cps/absl.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/lib64/ccache/share/cps/absl.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/local/abslConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/absl-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib64/cps/absl.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cps/absl.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/local/share/cps/absl.cps"
+        mode: "cps"
+        reason: "no_exist"
+    found:
+      path: "/usr/local/lib64/cmake/absl/abslConfig.cmake"
+      mode: "config"
+      version: ""
+    search_context:
+      ENV{PATH}:
+        - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz"
+        - "/usr/bin"
+        - "/usr/condabin"
+        - "/home/mostafa/.local/bin"
+        - "/home/mostafa/bin"
+        - "/usr/lib64/ccache"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/snapd/snap/bin"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/usr"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "/home/mostafa/dof-from-bag-player/packages/protobuf/build/cmake/protobuf/protobuf-config.cmake:12 (find_package)"
+      - "CMakeLists.txt:98 (find_package)"
+    name: "utf8_range"
+    configs:
+      -
+        filename: "utf8_range.cps"
+        kind: "cps"
+      -
+        filename: "utf8_rangeConfig.cmake"
+        kind: "cmake"
+      -
+        filename: "utf8_range-config.cmake"
+        kind: "cmake"
+    version_request:
+      exact: false
+    settings:
+      required: "optional"
+      quiet: false
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      names:
+        - "utf8_range"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/pkgRedirects/utf8_rangeConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/pkgRedirects/utf8_range-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/pkgRedirects/lib64/cps/utf8_range.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/pkgRedirects/lib/cps/utf8_range.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/mmdetection3d/tools/detzero_temporal_pipeline_complete/recorder_pipeline/build-config-test/CMakeFiles/pkgRedirects/share/cps/utf8_range.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/utf8_rangeConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/utf8_range-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/lib64/cps/utf8_range.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/lib/cps/utf8_range.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz/share/cps/utf8_range.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/utf8_rangeConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/utf8_range-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib64/cps/utf8_range.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cps/utf8_range.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/share/cps/utf8_range.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/condabin/utf8_rangeConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/condabin/utf8_range-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/condabin/lib64/cps/utf8_range.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/condabin/lib/cps/utf8_range.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/condabin/share/cps/utf8_range.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/.local/utf8_rangeConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/.local/utf8_range-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/.local/lib64/cps/utf8_range.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/.local/lib/cps/utf8_range.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/.local/share/cps/utf8_range.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/utf8_rangeConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/utf8_range-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/lib64/cps/utf8_range.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/lib/cps/utf8_range.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/mostafa/share/cps/utf8_range.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/lib64/ccache/utf8_rangeConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib64/ccache/utf8_range-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib64/ccache/lib64/cps/utf8_range.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/lib64/ccache/lib/cps/utf8_range.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/lib64/ccache/share/cps/utf8_range.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/local/utf8_rangeConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/utf8_range-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib64/cps/utf8_range.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cps/utf8_range.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/local/share/cps/utf8_range.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib64/cmake/utf8_range/utf8_rangeConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+    found:
+      path: "/usr/local/lib64/cmake/utf8_range/utf8_range-config.cmake"
+      mode: "config"
+      version: ""
+    search_context:
+      ENV{PATH}:
+        - "/home/mostafa/.codex/tmp/arg0/codex-arg02oRKlz"
+        - "/usr/bin"
+        - "/usr/condabin"
+        - "/home/mostafa/.local/bin"
+        - "/home/mostafa/bin"
+        - "/usr/lib64/ccache"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/snapd/snap/bin"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+        - "/home/mostafa/.vscode/extensions/openai.chatgpt-26.1007.21434-linux-x64/bin/linux-x86_64"
+        - "/home/mostafa/.local/share/JetBrains/Toolbox/scripts"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/usr"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+...

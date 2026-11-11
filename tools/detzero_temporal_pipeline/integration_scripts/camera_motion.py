@@ -2,7 +2,8 @@
 
 Boxes and LiDAR points are expressed at the LiDAR acquisition time in CLIDAR.
 A camera detection is indexed by recorder packet time, NOT verified exposure
-start. Only sensor-clock synchronization permits a conditional comparison.
+start. The selected synchronization clock (sensor or read/recorder) must be
+used consistently for camera-to-odometry interpolation.
 Out-of-range or missing timestamps disable compensation (no extrapolation).
 """
 from __future__ import annotations
@@ -81,7 +82,20 @@ class CameraMotion:
         self.offset_ns = round(float(offset_ms) * 1e6)
         self.max_offset_ns = round(float(max_offset_ms) * 1e6)
         self.max_pose_gap_ns = round(float(max_pose_gap_s) * 1e9)
-        self.times = [int(r.get('lidar_sensor_timestamp_ns') or 0) for r in rows]
+        self.clocks = []
+        for row in rows:
+            clock = row.get('camera_sync_clock')
+            if (clock in ('', None) and
+                    row.get('lidar_sensor_timestamp_ns') not in ('', None) and
+                    all(row.get(camera.lower() + '_delta_ns') not in ('', None)
+                        for camera in ('ARC_F', 'ARC_R', 'ARC_SL', 'ARC_SR'))):
+                # Legacy recorder exports synchronized against LiDAR sensor
+                # time but did not persist the explicit clock/target columns.
+                clock = 'sensor'
+            self.clocks.append(clock)
+        self.times = [int(r.get('camera_sync_target_ns') or
+                          r.get('lidar_sensor_timestamp_ns') or
+                          r.get('timestamp_ns') or 0) for r in rows]
         self.available = (len(rows) == len(poses) and all(t > 0 for t in self.times)
                           and all(a < b for a,b in zip(self.times, self.times[1:])))
         self._cache = {}
@@ -111,6 +125,8 @@ class CameraMotion:
             # Preserve support for pre-upgrade recorder exports which kept
             # only the synchronization target and camera delta.
             sync_target = row.get('camera_sync_target_ns')
+            if sync_target in ('', None) and self.clocks[frame_index] == 'sensor':
+                sync_target = lidar_t
             sync_delta = row.get(camera.lower() + '_delta_ns')
             if sync_target not in ('', None) and sync_delta not in ('', None):
                 camera_val = int(sync_target) + int(sync_delta)
@@ -121,7 +137,7 @@ class CameraMotion:
             reason = 'disabled_by_user'
         elif not self.available:
             reason = 'no_strictly_increasing_lidar_sensor_timestamps'
-        elif row.get('camera_sync_clock') != 'sensor':
+        elif self.clocks[frame_index] not in ('sensor', 'read'):
             reason = 'camera_and_lidar_clock_not_proven_comparable'
         elif camera_t is None:
             reason = 'camera_packet_timestamp_missing'
@@ -139,7 +155,7 @@ class CameraMotion:
             'camera_timestamp_origin': camera_origin if camera_t is not None else 'unavailable',
             'estimated_camera_timestamp_ns': camera_t,
             'camera_minus_lidar_seconds': ((camera_t-lidar_t)*1e-9 if camera_t is not None and lidar_t else None),
-            'assumptions': ('camera packet timestamp approximates exposure; clocks share sensor timescale; '
+            'assumptions': ('camera packet timestamp approximates exposure; clocks share selected synchronization timescale; '
                             'object velocity is constant; ego pose interpolated between LiDAR timestamps'),
             'T_camera_time_lidar_from_lidar_time_lidar':
                 (np.linalg.inv(pose_camera) @ self.poses[frame_index]),

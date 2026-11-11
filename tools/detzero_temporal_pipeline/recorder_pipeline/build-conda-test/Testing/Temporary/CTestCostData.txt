@@ -1,0 +1,2 @@
+xyzi_writer_byte_equivalence 1 0.00472143
+---

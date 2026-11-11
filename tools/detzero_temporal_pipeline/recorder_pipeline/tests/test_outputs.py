@@ -52,6 +52,42 @@ def test_export_with_protobuf_odometry(tmp_path):
         export(converted,output)
 
 
+def test_export_uses_recorder_time_for_read_clock_odometry(tmp_path):
+    converted = tmp_path/'converted'; converted.mkdir()
+    row = create_sync(converted, lidar_sensor_ns=2_000_000_000)
+    row.update(timestamp_ns='1050000000', camera_sync_clock='read',
+               camera_sync_target_ns='1050000000')
+    with (converted/'synchronization.csv').open('w', newline='') as file:
+        writer=csv.DictWriter(file,fieldnames=list(row)); writer.writeheader(); writer.writerow(row)
+    fused=tmp_path/'bag/FusedOdometry'
+    create_odometry(fused,[make_fused(1000,0,0), make_fused(1100,10,0)], [5,6])
+    output=tmp_path/'dataset'
+    assert export(converted,output,odometry_dir=fused)==1
+    with (output/'manifest.csv').open(newline='') as stream:
+        manifest=next(csv.DictReader(stream))
+    assert manifest['odometry_target_timestamp_ns'] == '1050000000'
+    assert np.load(output/'odometry_poses.npy')[0,0,3] == pytest.approx(5)
+
+
+def test_export_uses_aligned_sync_target_for_backlogged_read_clock(tmp_path):
+    converted = tmp_path/'converted'; converted.mkdir()
+    row = create_sync(converted, lidar_sensor_ns=100_000_000)
+    row.update(timestamp_ns='1300000000', camera_sync_clock='read',
+               camera_sync_target_ns='1050000000', lidar_order_clock='sensor',
+               sensor_to_sync_offset_ns='950000000')
+    with (converted/'synchronization.csv').open('w', newline='') as file:
+        writer=csv.DictWriter(file,fieldnames=list(row)); writer.writeheader(); writer.writerow(row)
+    fused=tmp_path/'bag/FusedOdometry'
+    create_odometry(fused,[make_fused(1000,0,0), make_fused(1100,10,0)], [5,6])
+    output=tmp_path/'dataset'
+    assert export(converted,output,odometry_dir=fused)==1
+    with (output/'manifest.csv').open(newline='') as stream:
+        manifest=next(csv.DictReader(stream))
+    assert manifest['odometry_target_timestamp_ns'] == '1050000000'
+    assert manifest['lidar_order_clock'] == 'sensor'
+    assert np.load(output/'odometry_poses.npy')[0,0,3] == pytest.approx(5)
+
+
 def test_export_reuses_validated_legacy_pcd_after_bin_pruned(tmp_path):
     converted = tmp_path / 'converted'
     converted.mkdir()

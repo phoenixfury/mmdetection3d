@@ -8,14 +8,32 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # Avoid accidentally mixing a local Protobuf 6 static library with Ubuntu's
 # packaged PCL/VTK/Protobuf 3 libraries. Protobuf 6 additionally requires an
 # ABI-matching Abseil installation (lts_20250127 in the reported build).
-set(RECORDER_PROTOBUF_PROVIDER "system" CACHE STRING
-    "Protobuf provider: system (Ubuntu packages) or config (matching custom installation)")
-set_property(CACHE RECORDER_PROTOBUF_PROVIDER PROPERTY STRINGS system config)
+set(RECORDER_PROTOBUF_PROVIDER "auto" CACHE STRING
+    "Protobuf provider: auto, system (distribution packages), or config (matching custom installation)")
+set_property(CACHE RECORDER_PROTOBUF_PROVIDER PROPERTY STRINGS auto system config)
+
+# Conda normally ships protoc, headers, libprotobuf and Abseil as one coherent
+# CMake package.  Prefer it in auto mode because an activated environment can
+# otherwise put a different protoc ahead of the distribution headers/runtime.
+if(RECORDER_PROTOBUF_PROVIDER STREQUAL "auto")
+  if(DEFINED ENV{CONDA_PREFIX} AND
+     EXISTS "$ENV{CONDA_PREFIX}/lib/cmake/protobuf/protobuf-config.cmake")
+    set(Protobuf_DIR "$ENV{CONDA_PREFIX}/lib/cmake/protobuf" CACHE PATH
+        "Selected Protobuf CMake package" FORCE)
+    set(RECORDER_PROTOBUF_IMPORT_ROOT "$ENV{CONDA_PREFIX}/include" CACHE PATH
+        "Directory containing google/protobuf/timestamp.proto" FORCE)
+    set(RECORDER_PROTOBUF_PROVIDER "config")
+    message(STATUS "Recorder auto-selected Protobuf from CONDA_PREFIX=$ENV{CONDA_PREFIX}")
+  else()
+    set(RECORDER_PROTOBUF_PROVIDER "system")
+    message(STATUS "Recorder auto-selected distribution Protobuf")
+  endif()
+endif()
 
 if(RECORDER_PROTOBUF_PROVIDER STREQUAL "system")
   if(NOT CMAKE_SYSTEM_NAME STREQUAL "Linux")
     message(FATAL_ERROR
-      "RECORDER_PROTOBUF_PROVIDER=system targets Ubuntu/Linux; select 'config' "
+      "RECORDER_PROTOBUF_PROVIDER=system targets Linux; select 'config' "
       "for a custom Protobuf installation on other systems.")
   endif()
 
@@ -34,8 +52,9 @@ if(RECORDER_PROTOBUF_PROVIDER STREQUAL "system")
      NOT RECORDER_DISTRO_PROTOBUF_LIBRARY OR
      NOT RECORDER_DISTRO_PROTOC)
     message(FATAL_ERROR
-      "Ubuntu Protobuf development files are incomplete. Install matching packages:\n"
-      "  sudo apt install libprotobuf-dev protobuf-compiler\n"
+      "Distribution Protobuf development files are incomplete. Install matching "
+      "headers, library and compiler (for Ubuntu: sudo apt install "
+      "libprotobuf-dev protobuf-compiler).\n"
       "Expected: /usr/bin/protoc, /usr/include/google/protobuf, "
       "/usr/lib/<multiarch>/libprotobuf.so.\n"
       "Do not link Ubuntu PCL to /usr/local/lib/libprotobuf.a.")
@@ -70,7 +89,9 @@ if(RECORDER_PROTOBUF_PROVIDER STREQUAL "system")
   if(NOT _protoc_version VERSION_EQUAL Protobuf_VERSION)
     message(FATAL_ERROR
       "Mixed Protobuf toolchain: protoc=${_protoc_version} "
-      "library=${Protobuf_VERSION}. Install matching Ubuntu packages.")
+      "headers/library=${Protobuf_VERSION}. Reinstall matching distribution "
+      "packages, or activate a Conda environment containing protobuf and configure "
+      "with -DRECORDER_PROTOBUF_PROVIDER=auto (recommended).")
   endif()
   # Protobuf 3.12-3.14 requires an explicit flag for proto3 optional fields
   # (used by lidar.proto); newer compilers accept them without the flag.
@@ -129,6 +150,19 @@ endif()
 
 find_package(PCL REQUIRED COMPONENTS common io)
 
+# Conda's compiler uses its own sysroot and does not implicitly search the
+# host's /usr/include.  Distribution PCL packages, however, depend on the host
+# Boost headers.  PCL's imported targets do not consistently propagate the
+# header-only Boost.Preprocessor path, so resolve and add it explicitly.
+find_path(RECORDER_BOOST_INCLUDE_DIR
+  NAMES boost/preprocessor/arithmetic/add.hpp
+  HINTS ${Boost_INCLUDE_DIRS} /usr/include /usr/local/include)
+if(NOT RECORDER_BOOST_INCLUDE_DIR)
+  message(FATAL_ERROR
+    "Boost headers required by PCL were not found. Install the distribution "
+    "Boost development package (for example libboost-dev or boost-devel).")
+endif()
+
 message(STATUS "Recorder Protobuf provider: ${RECORDER_PROTOBUF_PROVIDER}")
 message(STATUS "Recorder Protobuf import root: ${RECORDER_PROTOBUF_IMPORT_ROOT}")
 if(RECORDER_PROTOBUF_PROVIDER STREQUAL "system")
@@ -159,7 +193,20 @@ if(RECORDER_PROTOBUF_PROVIDER STREQUAL "system")
   target_include_directories(decode_lidar BEFORE PRIVATE "${_protobuf_overlay}")
 endif()
 target_include_directories(decode_lidar SYSTEM PRIVATE ${PCL_INCLUDE_DIRS})
+# CMake removes /usr/include from -isystem flags as an "implicit" directory,
+# but Conda's GCC wrapper uses a sysroot where it is not actually implicit.
+# -idirafter forces this host-header fallback while keeping Conda headers first.
+target_compile_options(decode_lidar PRIVATE
+  "-idirafter" "${RECORDER_BOOST_INCLUDE_DIR}")
 target_link_libraries(decode_lidar PRIVATE protobuf::libprotobuf ${PCL_LIBRARIES})
+if(OPENNI_LIBRARY)
+  get_filename_component(RECORDER_OPENNI_LIBRARY_DIR "${OPENNI_LIBRARY}" DIRECTORY)
+  # PCL exports OpenNI as -lOpenNI rather than its absolute path. Conda's
+  # linker only searches its sysroot unless the host library directory is
+  # passed explicitly.
+  target_link_options(decode_lidar PRIVATE
+    "-L${RECORDER_OPENNI_LIBRARY_DIR}")
+endif()
 target_compile_options(decode_lidar PRIVATE -Wall -Wextra -Wpedantic)
 
 include(CTest)

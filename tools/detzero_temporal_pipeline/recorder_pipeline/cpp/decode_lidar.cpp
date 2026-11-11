@@ -14,6 +14,7 @@
 #include <cstring>
 #include <filesystem>
 #include <fstream>
+#include <future>
 #include <iostream>
 #include <iterator>
 #include <memory>
@@ -30,15 +31,19 @@ struct Options {
   fs::path output;
   size_t limit = 0;
   bool overwrite = false;
+  size_t workers = 1;
 };
 Options parse_options(int argc, char** argv) {
-  if (argc < 3) throw std::runtime_error("usage: decode_lidar BAG OUTPUT [--limit N] [--overwrite]");
+  if (argc < 3) throw std::runtime_error("usage: decode_lidar BAG OUTPUT [--limit N] [--workers N] [--overwrite]");
   Options result{argv[1], argv[2]};
   for (int i = 3; i < argc; ++i) {
     const std::string flag = argv[i];
     if (flag == "--overwrite") result.overwrite = true;
     else if (flag == "--limit" && i + 1 < argc) {
       result.limit = std::stoull(argv[++i]);
+    } else if (flag == "--workers" && i + 1 < argc) {
+      result.workers = std::stoull(argv[++i]);
+      if (result.workers == 0) throw std::runtime_error("--workers must be positive");
     } else throw std::runtime_error("unsupported argument: " + flag);
   }
   return result;
@@ -81,6 +86,43 @@ void write_xyzi(const fs::path& destination, const pcl::PointCloud<pcl::PointXYZ
     throw;
   }
 }
+struct DecodedRow {
+  uint64_t timestamp;
+  uint64_t sensor_timestamp;
+  std::string chunk;
+  size_t scan;
+  size_t points;
+};
+
+std::vector<DecodedRow> decode_chunk(const fs::path& chunk, const fs::path& output,
+                                     const std::vector<uint64_t>& timestamps,
+                                     bool overwrite, size_t max_samples = 0) {
+  bag::TopicData topic;
+  if (!topic.ParseFromString(read_file(chunk)))
+    throw std::runtime_error(chunk.string() + ": invalid bag.TopicData protobuf");
+  if (static_cast<size_t>(topic.samples_size()) != timestamps.size())
+    throw std::runtime_error(chunk.string() + ": record/index count mismatch");
+  pcl::io::OctreePointCloudCompression<pcl::PointXYZ> decoder;
+  std::vector<DecodedRow> rows;
+  const size_t count = max_samples ? std::min(max_samples, timestamps.size()) : timestamps.size();
+  rows.reserve(count);
+  for (size_t i = 0; i < count; ++i) {
+    const auto timestamp = timestamps[static_cast<size_t>(i)];
+    PointCloud message;
+    if (!message.ParseFromString(topic.samples(static_cast<int>(i)).data()) || message.rows() <= 0 || message.data().empty())
+      throw std::runtime_error(chunk.string() + ": invalid PointCloud sample " + std::to_string(i));
+    std::istringstream encoded(message.data(), std::ios::in | std::ios::binary);
+    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
+    decoder.decodePointCloud(encoded, cloud);
+    if (cloud->size() != static_cast<size_t>(message.rows()))
+      throw std::runtime_error(chunk.string() + ": decoded point count differs from PointCloud.rows; check encoding");
+    const fs::path filename = std::to_string(timestamp) + ".bin";
+    write_xyzi(output / "lidar" / filename, *cloud, overwrite);
+    rows.push_back({timestamp, message.timestamp(), chunk.filename().string(),
+                    static_cast<size_t>(i), cloud->size()});
+  }
+  return rows;
+}
 } // namespace
 
 int main(int argc, char** argv) {
@@ -104,36 +146,45 @@ int main(int argc, char** argv) {
     if (!csv) throw std::runtime_error("cannot write " + temp_manifest.string());
     csv << "timestamp_ns,sensor_timestamp_ns,path,chunk,scan_in_chunk,points,encoding,intensity_source\n";
 
-    pcl::io::OctreePointCloudCompression<pcl::PointXYZ> decoder;
+    std::vector<std::vector<uint64_t>> indexes;
+    std::vector<size_t> chunk_limits;
+    size_t selected = 0;
+    for (const auto& chunk : chunks) {
+      auto index = read_index(chunk.parent_path() / (chunk.stem().string() + ".idx"));
+      const size_t take = opt.limit ? std::min(index.size(), opt.limit - selected) : index.size();
+      selected += take;
+      indexes.push_back(std::move(index));
+      chunk_limits.push_back(opt.limit ? take : 0);
+      if (opt.limit && selected >= opt.limit) break;
+    }
+    chunks.resize(indexes.size());
     size_t total = 0;
     std::unordered_set<uint64_t> seen_timestamps;
-    for (const auto& chunk : chunks) {
-      const auto timestamps = read_index(chunk.parent_path() / (chunk.stem().string() + ".idx"));
-      bag::TopicData topic;
-      if (!topic.ParseFromString(read_file(chunk)))
-        throw std::runtime_error(chunk.string() + ": invalid bag.TopicData protobuf");
-      if (static_cast<size_t>(topic.samples_size()) != timestamps.size())
-        throw std::runtime_error(chunk.string() + ": record/index count mismatch");
-      for (int i = 0; i < topic.samples_size(); ++i) {
-        const auto timestamp = timestamps[static_cast<size_t>(i)];
-        if (!seen_timestamps.insert(timestamp).second)
-          throw std::runtime_error("duplicate LiDAR index timestamp: " + std::to_string(timestamp));
-        PointCloud message;
-        if (!message.ParseFromString(topic.samples(i).data()) || message.rows() <= 0 || message.data().empty())
-          throw std::runtime_error(chunk.string() + ": invalid PointCloud sample " + std::to_string(i));
-        std::istringstream encoded(message.data(), std::ios::in | std::ios::binary);
-        pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
-        decoder.decodePointCloud(encoded, cloud);
-        if (cloud->size() != static_cast<size_t>(message.rows()))
-          throw std::runtime_error(chunk.string() + ": decoded point count differs from PointCloud.rows; check encoding");
-        const fs::path filename = std::to_string(timestamp) + ".bin";
-        write_xyzi(opt.output / "lidar" / filename, *cloud, opt.overwrite);
-        csv << timestamp << ',' << message.timestamp() << ",lidar/" << filename.string()
-            << ',' << chunk.filename().string() << ',' << i << ',' << cloud->size()
-            << ",pcl,zeros\n";
-        if (++total == opt.limit) break;
+    std::vector<std::future<std::vector<DecodedRow>>> pending;
+    std::vector<DecodedRow> rows;
+    for (size_t i = 0; i < chunks.size(); ++i) {
+      pending.push_back(std::async(std::launch::async, decode_chunk,
+                                   chunks[i], opt.output, indexes[i], opt.overwrite,
+                                   chunk_limits[i]));
+      if (pending.size() >= opt.workers || i + 1 == chunks.size()) {
+        for (auto& job : pending) {
+          auto decoded = job.get();
+          rows.insert(rows.end(), decoded.begin(), decoded.end());
+        }
+        pending.clear();
       }
-      if (opt.limit && total >= opt.limit) break;
+    }
+    std::sort(rows.begin(), rows.end(), [](const auto& a, const auto& b) {
+      return a.timestamp < b.timestamp;
+    });
+    for (const auto& row : rows) {
+      if (!seen_timestamps.insert(row.timestamp).second)
+        throw std::runtime_error("duplicate LiDAR index timestamp: " + std::to_string(row.timestamp));
+      const auto filename = std::to_string(row.timestamp) + ".bin";
+      csv << row.timestamp << ',' << row.sensor_timestamp << ",lidar/" << filename
+          << ',' << row.chunk << ',' << row.scan << ',' << row.points
+          << ",pcl,zeros\n";
+      ++total;
     }
     csv.close();
     if (!csv) throw std::runtime_error("failed writing manifest");
