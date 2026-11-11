@@ -145,7 +145,8 @@ class Sparse4DHead(BaseModule):
         reg_target = reg_target[positive].float()
         weight = reg_target.new_tensor(self.reg_weights).expand(
             reg_target.shape[0], -1
-        )
+        ) * torch.isfinite(reg_target).to(reg_target.dtype)
+        reg_target = torch.nan_to_num(reg_target)
         positive_count = reduce_mean(positive.sum().to(weight.dtype)).clamp_min(1.0)
         return valid, cls_target, reg_target, positive, weight, positive_count
 

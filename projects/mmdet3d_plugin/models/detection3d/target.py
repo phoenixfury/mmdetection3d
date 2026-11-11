@@ -99,7 +99,7 @@ class SparseBox3DTarget:
             None
             if not len(target)
             else (
-                torch.abs(prediction[index, :, None] - target[None])
+                torch.abs(prediction[index, :, None] - torch.nan_to_num(target)[None])
                 * weights[index][None]
                 * coefficients
             ).sum(-1)
@@ -215,13 +215,13 @@ class SparseBox3DTarget:
         # so every attention block contains its own positive/negative pair.
         classes = classes[:, None].expand(-1, self.num_dn_groups, -1)
         boxes = boxes[:, None].expand(-1, self.num_dn_groups, -1, -1)
-        anchors = self._dn_noise(boxes)
+        anchors = self._dn_noise(torch.nan_to_num(boxes))
         targets = boxes.clone()
         labels = classes.clone()
         valid = classes >= 0
         group_width = maximum
         if self.add_neg_dn:
-            negatives = self._dn_noise(boxes, negative=True)
+            negatives = self._dn_noise(torch.nan_to_num(boxes), negative=True)
             negative_valid = valid.clone()
             if self.dn_ignore_gt_overlap:
                 for index, gt in enumerate(all_encoded):

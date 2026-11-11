@@ -16,6 +16,8 @@ class PackSparse4DInputs(Pack3DDetInputs):
         "sample_idx",
         "scene_token",
         "frame_idx",
+        "prev",
+        "next",
         "timestamp",
         "img_path",
         "filename",
@@ -72,6 +74,10 @@ class PackSparse4DInputs(Pack3DDetInputs):
         packed = super().pack_single_results(dict(results))
         inputs = packed["inputs"]
         inputs["img"] = self._pack_img(results["img"])
+        annotation = results.get('ann_info', {})
+        if 'instance_inds' in annotation:
+            packed['data_samples'].gt_instances_3d.instance_inds = self._tensor(
+                np.asarray(annotation['instance_inds'], dtype=np.int64))
 
         camera_count = int(inputs["img"].shape[0])
         image_shape = results.get("img_shape", [(800, 800, 3)] * camera_count)
